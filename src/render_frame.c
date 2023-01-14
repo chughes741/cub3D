@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   render_frame.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:57:52 by chughes          ###   ########.fr       */
+/*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
+/*   Updated: 2023/01/14 16:29:57 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int main(int argc, char **argv)
+// Renders next frame from map to window
+int	render_frame(void)
 {
-	t_data	*d;
+	t_data	*data;
+	int		x;
+	int		y;
 
-	d = get_data();
-	init_data(argc, argv);
-	d->win = mlx_new_window(d->mlx, d->width * 64, d->height * 64, "cub3D");
-	mlx_hook(d->win, ON_DESTROY, 0, exit_window, &d);
-	mlx_hook(d->win, ON_KEYDOWN, 0, keydown, &d);
-	mlx_loop_hook(d->mlx, render_frame, NULL);
-	mlx_loop(d->mlx);
-	exit(0);
+	data = get_data();
+	y = -1;
+	while (++y < data->height)
+	{
+		x = -1;
+		while (++x < data->width)
+			put_tile(data->map[y][x], x * 64, y * 64);
+	}
+	put_tile('P', data->x_p * 64, data->y_p * 64);
+	return (0);
 }

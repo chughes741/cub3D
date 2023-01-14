@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:57:52 by chughes          ###   ########.fr       */
+/*   Created: 2023/01/14 16:45:02 by chughes           #+#    #+#             */
+/*   Updated: 2023/01/14 16:45:11 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int main(int argc, char **argv)
+// Compares 'n' number of char in strings, returns 0 if same or diff
+int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
-	t_data	*d;
+	int	i;
 
-	d = get_data();
-	init_data(argc, argv);
-	d->win = mlx_new_window(d->mlx, d->width * 64, d->height * 64, "cub3D");
-	mlx_hook(d->win, ON_DESTROY, 0, exit_window, &d);
-	mlx_hook(d->win, ON_KEYDOWN, 0, keydown, &d);
-	mlx_loop_hook(d->mlx, render_frame, NULL);
-	mlx_loop(d->mlx);
-	exit(0);
+	i = 0;
+	while (n--)
+	{
+		if (str1[i] != str2[i])
+			return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+		if (str1[i] && str2[i])
+			i++;
+	}
+	return (0);
 }

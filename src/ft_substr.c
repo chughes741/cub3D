@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:57:52 by chughes          ###   ########.fr       */
+/*   Created: 2023/01/14 16:41:49 by chughes           #+#    #+#             */
+/*   Updated: 2023/01/14 16:42:16 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int main(int argc, char **argv)
+// Returns a copy of 's' starting at 'start' and of length 'len'
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	t_data	*d;
+	char		*str;
+	const char	*first;
 
-	d = get_data();
-	init_data(argc, argv);
-	d->win = mlx_new_window(d->mlx, d->width * 64, d->height * 64, "cub3D");
-	mlx_hook(d->win, ON_DESTROY, 0, exit_window, &d);
-	mlx_hook(d->win, ON_KEYDOWN, 0, keydown, &d);
-	mlx_loop_hook(d->mlx, render_frame, NULL);
-	mlx_loop(d->mlx);
-	exit(0);
+	first = &s[start];
+	str = xalloc((len + 1), sizeof(char));
+	if (start > ft_strlen(s))
+		return (str);
+	if (str == NULL)
+		return (NULL);
+	ft_strlcpy(str, first, (len + 1));
+	str[len] = '\0';
+	return (str);
 }

@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:57:52 by chughes          ###   ########.fr       */
+/*   Created: 2023/01/14 16:42:50 by chughes           #+#    #+#             */
+/*   Updated: 2023/01/14 16:43:01 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int main(int argc, char **argv)
+// Copies 'size' number of char from 'src' into 'dst'
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	t_data	*d;
+	size_t	i;
+	size_t	srclen;
 
-	d = get_data();
-	init_data(argc, argv);
-	d->win = mlx_new_window(d->mlx, d->width * 64, d->height * 64, "cub3D");
-	mlx_hook(d->win, ON_DESTROY, 0, exit_window, &d);
-	mlx_hook(d->win, ON_KEYDOWN, 0, keydown, &d);
-	mlx_loop_hook(d->mlx, render_frame, NULL);
-	mlx_loop(d->mlx);
-	exit(0);
+	i = 0;
+	srclen = ft_strlen(src);
+	if (size == 0)
+		return (srclen);
+	while (i < size - 1 && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (srclen);
 }
