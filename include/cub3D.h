@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/16 15:27:10 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 15:39:41 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_data {
 	void	*win;
 	char	*addr;
 	int		endian;
-
 	char	**map_file;
 	char	*east_name;
 	char	*west_name;
@@ -76,7 +75,6 @@ typedef struct s_data {
 	void	*south;
 	int		floor;
 	int		ceiling;
-
 	int		**map;
 	int		width;
 	int		height;

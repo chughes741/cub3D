@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/16 15:31:34 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 16:11:23 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	read_map(char *map_name)
 	while (line)
 	{
 		d->map_file = array_realloc(d->map_file, arraylen(d->map_file) + 1);
-		d->map_file[arraylen(d->map_file) - 1] = line;
+		d->map_file[arraylen(d->map_file)] = line;
 		line = gnl(map_fd);
 	}
 	close(map_fd);
@@ -62,19 +62,19 @@ void grab_textures(void)
 			data->map_file = array_del_one(data->map_file, i);
 			--i;
 		}
-		if (ft_strncmp(data->map_file[i], "SO ", 3) == 0 && data->south_name == NULL)
+		else if (ft_strncmp(data->map_file[i], "SO ", 3) == 0 && data->south_name == NULL)
 		{
 			data->south_name = ft_strdup(data->map_file[i] + 4);
 			data->map_file = array_del_one(data->map_file, i);	
 			--i;
 		}
-		if (ft_strncmp(data->map_file[i], "WE ", 3) == 0 && data->west_name == NULL)
+		else if (ft_strncmp(data->map_file[i], "WE ", 3) == 0 && data->west_name == NULL)
 		{
 			data->west_name = ft_strdup(data->map_file[i] + 4);
 			data->map_file = array_del_one(data->map_file, i);	
 			--i;
 		}
-		if (ft_strncmp(data->map_file[i], "EA ", 3) == 0 && data->east_name == NULL)
+		else if (ft_strncmp(data->map_file[i], "EA ", 3) == 0 && data->east_name == NULL)
 		{
 			data->east_name = ft_strdup(data->map_file[i] + 4);
 			data->map_file = array_del_one(data->map_file, i);	
@@ -117,16 +117,17 @@ void grab_map(void)
 	int		i;
 
 	data = get_data();
-	i = 0;
-	while (data->map_file[i])
+	i = -1;
+	// write(STDOUT_FILENO, "...\n", 4);
+	while (data->map_file[++i])
 	{
-		if (ft_strchr("1 ", data->map_file[i][0]) != 0)
+		if (ft_strchr("1 \0", data->map_file[i][0]) == NULL)
 			exit_error();
 	}
 	get_size();
 	data->map = xalloc(data->height + 1, sizeof(int *));
-	i = 0;
-	while (i <= data->height)
+	i = -1;
+	while (++i <= data->height)
 		data->map[i] = xalloc(data->width + 1, sizeof(int));
 	copy_map();
 }
@@ -151,10 +152,10 @@ void copy_map(void)
 				data->map[i][j] = EMPTY;
 			else if (data->map_file[i][j] == '1')
 				data->map[i][j] = WALL;
-			else if (ft_strchr("NESW", data->map_file[i][j]))
+			else if (ft_strchr("NESW", data->map_file[i][j]) != NULL)
 				data->map[i][j] = PLAYER;
-			else
-				exit_error();
+			else if (ft_strchr("\n\0", data->map_file[i][j]) == NULL)
+        exit_error();
 			++j;
 		}
 		++i;
