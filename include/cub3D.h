@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/16 13:28:56 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 15:27:10 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,38 @@ enum {
 	ON_DESTROY = 17
 };
 
+// Enum for map values
+enum {
+	EMPTY = 0,
+	WALL = 1,
+	PLAYER = 2,
+	SPACE = 3
+};
+
 // Data struct with window data
 typedef struct s_data {
 	void	*mlx;
 	void	*win;
 	char	*addr;
-	char	**map;
-	char	*map_name;
-	int		map_fd;
 	int		endian;
+
+	char	**map_file;
+	char	*east_name;
+	char	*west_name;
+	char	*north_name;
+	char	*south_name;
+	char	*floor_name;
+	char	*ceiling_name;
 	void	*east;
 	void	*west;
 	void	*north;
 	void	*south;
 	int		floor;
 	int		ceiling;
+
+	int		**map;
+	int		width;
+	int		height;
 }			t_data;
 
 // Libft functions
@@ -89,12 +106,15 @@ void	init_data(int argc, char *argv[]);
 void	del_data(void);
 
 // Map parsing checks
-void	check_input(int argc);
+void	check_input(int argc, char *path);
+void	read_map(char *map_name);
 void	parse_map(void);
+void	grab_textures(void);
+void	grab_colors(void);
+void	grab_map(void);
+void	copy_map(void);
+void	get_size(void);
 void	exit_error(void);
-void	check_map(void);
-void	check_tile(void);
-void	count_tile(int x, int y);
 
 // MLX interop functions
 void	close_window(t_data **data);
