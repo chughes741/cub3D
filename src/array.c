@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 13:27:17 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/16 13:27:27 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 15:30:48 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**arraydup(char **array)
 
 	if (array == NULL)
 		return (NULL);
-	newarray = (char **)ft_calloc(arraylen(array) + 1, sizeof(char *));
+	newarray = (char **)xalloc(arraylen(array) + 1, sizeof(char *));
 	i = -1;
 	while (array[++i] != NULL)
 		newarray[i] = ft_strdup(array[i]);
@@ -44,9 +44,9 @@ char	**array_realloc(char **ptr, int size)
 	char	**new_array;
 	int		i;
 
-	new_array = (char **)ft_calloc(size + 1, sizeof(char *));
+	new_array = (char **)xalloc(size + 1, sizeof(char *));
 	i = -1;
-	while (ptr[++i] != NULL && i < size)
+	while (ptr && ptr[++i] != NULL && i < size)
 		new_array[i] = ptr[i];
 	ptr = xfree(ptr);
 	return (new_array);
@@ -59,7 +59,7 @@ char	**array_del_one(char **array, int position)
 	int		i;
 	int		j;
 
-	new_array = (char **)ft_calloc(arraylen(array), sizeof(char *));
+	new_array = (char **)xalloc(arraylen(array), sizeof(char *));
 	if (position < 0)
 		position += arraylen(array) - 1;
 	i = 0;
