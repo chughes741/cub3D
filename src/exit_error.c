@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:27 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:29:29 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 12:35:20 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	exit_error(void)
 
 	data = get_data();
 	del_data();
-	perror("Error\n");
+	perror("Error ");
 	exit(1);
 }
