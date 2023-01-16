@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/16 12:54:29 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 13:28:56 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_data {
 	void	*west;
 	void	*north;
 	void	*south;
+	int		floor;
+	int		ceiling;
 }			t_data;
 
 // Libft functions
@@ -69,12 +71,17 @@ void	*xfree(void *ptr);
 char	*gnl(int fd);
 char	*ft_strchr(const char *str, int c);
 size_t	ft_strlen(const char *str);
-int	ft_linelen(const char *str);
+int		ft_linelen(const char *str);
 char	*ft_strdup(const char *src);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*str_append(char *s1, char *s2);
-int	ft_strncmp(const char *str1, const char *str2, size_t n);
+int		ft_strncmp(const char *str1, const char *str2, size_t n);
+int		arraylen(char **array);
+char	**arraydup(char **array);
+char	**array_realloc(char **ptr, int size);
+char	**array_del_one(char **array, int position);
+char	**free_array(char **array);
 
 // Data setup and teardown functions
 t_data	*get_data(void);
