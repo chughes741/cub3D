@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:59:41 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 12:54:29 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@
 # include <unistd.h>	// close, read
 # include <stdio.h>		// printf, perror
 # include <string.h>	// strerror
+
+# define WIDTH 1200
+# define HEIGHT 900
+
+// Enum for key codes
+enum {
+	W_KEY = 13,
+	A_KEY = 0,
+	S_KEY = 1,
+	D_KEY = 2,
+	L_KEY = 123,
+	R_KEY = 124,
+	ESC_KEY = 53
+};
 
 // Enum for MLX functions
 enum {
@@ -42,16 +56,7 @@ typedef struct s_data {
 	char	**map;
 	char	*map_name;
 	int		map_fd;
-	int		height;
-	int		width;
-	int		line_length;
 	int		endian;
-	int		moves;
-	int		x_p;
-	int		y_p;
-	int		n_col;
-	int		n_p;
-	int		n_ex;
 	void	*east;
 	void	*west;
 	void	*north;
@@ -93,9 +98,11 @@ void	close_window(t_data **data);
 int		keydown(int keycode, t_data **data);
 
 // Movement functions
-void	move_up(t_data **data);
-void	move_dn(t_data **data);
-void	move_lf(t_data **data);
-void	move_rg(t_data **data);
+void	move_north(t_data **data);
+void	move_west(t_data **data);
+void	move_south(t_data **data);
+void	move_east(t_data **data);
+void	look_left(t_data **data);
+void	look_right(t_data **data);
 
 #endif // CUB3D_H

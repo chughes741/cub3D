@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:29:57 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 12:48:53 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,7 @@
 int	render_frame(void)
 {
 	t_data	*data;
-	int		x;
-	int		y;
 
 	data = get_data();
-	y = -1;
-	while (++y < data->height)
-	{
-		x = -1;
-		while (++x < data->width)
-			put_tile(data->map[y][x], x * 64, y * 64);
-	}
-	put_tile('P', data->x_p * 64, data->y_p * 64);
 	return (0);
 }

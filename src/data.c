@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:59:15 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 12:49:07 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,11 @@ t_data	*get_data(void)
 void	init_data(int argc, char *argv[])
 {
 	t_data	*d;
-	int		w;
-	int		h;
 
-	d = get_data();
-	d->map_name = argv[1];
-	check_input(argc);
+	(void)argc;
+	(void)argv;
 	d->mlx = mlx_init();
-	d->east = mlx_xpm_file_to_image(d->mlx, "./assets/textures/east_texture.xpm", &w, &h);
-	d->west = mlx_xpm_file_to_image(d->mlx, "./assets/textures/west_texture.xpm", &w, &h);
-	d->north = mlx_xpm_file_to_image(d->mlx, "./assets/textures/north_texture.xpm", &w, &h);
-	d->south = mlx_xpm_file_to_image(d->mlx, "./assets/textures/south_texture.xpm", &w, &h);
+	d = get_data();
 	return ;
 }
 
@@ -44,16 +38,8 @@ void	init_data(int argc, char *argv[])
 void	del_data(void)
 {
 	t_data	*data;
-	int		i;
 
 	data = get_data();
-	i = -1;
-	if (data->map)
-	{
-		while (data->map[++i])
-			data->map[i] = xfree(data->map[i]);
-		data->map = xfree(data->map);
-	}
 	data = xfree(data);
 	return ;
 }

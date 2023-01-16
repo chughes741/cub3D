@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:06 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/14 16:29:08 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/16 12:59:35 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,19 @@ void	close_window(t_data **data)
 // Checks key presses
 int	keydown(int keycode, t_data **data)
 {
-	if (keycode == 53)
+	if (keycode == ESC_KEY)
 		close_window(data);
-	if (keycode == 13)
-		move_up(data);
-	if (keycode == 1)
-		move_dn(data);
-	if (keycode == 0)
-		move_lf(data);
-	if (keycode == 2)
-		move_rg(data);
-	check_tile();
+	if (keycode == W_KEY)
+		move_north(data);
+	if (keycode == A_KEY)
+		move_west(data);
+	if (keycode == S_KEY)
+		move_south(data);
+	if (keycode == D_KEY)
+		move_east(data);
+	if (keycode == L_KEY)
+		look_left(data);
+	if (keycode == R_KEY)
+		look_right(data);
 	return (0);
 }
