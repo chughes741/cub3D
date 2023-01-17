@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 18:12:57 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 18:27:54 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,21 @@ void	mlx_pixel_img(int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	ver_line(t_data *data, int x, int y1, int y2, int color)
+void	ver_line(t_data *data, int x, int y1, int y2, int side)
 {
 	int	pixel;
 
-	pixel = 0;
-	while (pixel++ < y1)
+	int	color;
+	color = 0xFFFF00;
+	if (side == 1)
+		color = color / 2;
+
+	pixel = -1;
+	while (++pixel < y1)
 		mlx_pixel_img(x, pixel, data->floor);
-	while (pixel++ <= y2)
+	while (++pixel < y2)
 		mlx_pixel_img(x, pixel, color);
-	while (pixel++ < HEIGHT)
+	while (++pixel < HEIGHT)
 		mlx_pixel_img(x, pixel, data->ceiling);
 }
 
@@ -134,22 +139,7 @@ int	render_frame(void)
 		if(draw_end >= HEIGHT)
 			draw_end = HEIGHT - 1;
 
-		int	color;
-		// if (data->map[map_y][map_x] == 1)
-			// color = 0xFF0000;
-		// else if (data->map[map_y][map_x] == 2)
-			// color = 0x00FF00;
-		// else if (data->map[map_y][map_x] == 3)
-			// color = 0x0000FF;
-		// else if (data->map[map_y][map_x] == 4)
-			// color = 0xFFFFFF;
-		// else
-		color = 0xFFFF00;
-		
-		if (side == 1)
-			color = color / 2;
-
-		ver_line(data, x, draw_start, draw_end, color);
+		ver_line(data, x, draw_start, draw_end, side);
 		
 		x++;
 	}
