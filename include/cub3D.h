@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 15:24:24 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 17:18:46 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,7 @@
 # include <stdio.h>		// printf, perror
 # include <string.h>	// strerror
 
-# define WIDTH 1200
-# define HEIGHT 900
-
-// Enum for key codes
-enum {
-	W_KEY = 13,
-	A_KEY = 0,
-	S_KEY = 1,
-	D_KEY = 2,
-	L_KEY = 123,
-	R_KEY = 124,
-	ESC_KEY = 53
-};
-
-// Enum for MLX functions
-enum {
-	ON_KEYDOWN = 2,
-	ON_KEYUP = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
-	ON_DESTROY = 17
-};
-
-// Enum for map values
-enum {
-	EMPTY = 0,
-	WALL = 1,
-	PLAYER = 2,
-	SPACE = 3
-};
+# include "cub3D_defines.h"
 
 // Data struct with window data
 typedef struct s_data {
@@ -63,6 +32,9 @@ typedef struct s_data {
 	void	*win;
 	char	*addr;
 	int		endian;
+	void	*img;
+	int		bpp;
+	int		line_size;
 
 	// Map and textures
 	char	**map_file;
@@ -72,25 +44,24 @@ typedef struct s_data {
 	char	*south_name;
 	char	*floor_name;
 	char	*ceiling_name;
+
 	void	*east;
 	void	*west;
 	void	*north;
 	void	*south;
 	int		floor;
 	int		ceiling;
-	int		**map;
 	int		width;
 	int		height;
+	int		**map;
 
-	// Player info
+	// Camera info
 	double	pos_x;
 	double	pos_y;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
-	double	move_speed;
-	double	rot_speed;
 
 	// Frame info
 	double	time;
@@ -132,12 +103,12 @@ void	grab_map(void);
 void	copy_map(void);
 void	init_player(char direction, int x, int y);
 void	get_size(void);
+void	set_colors(void);
 void	exit_error(void);
 
 // MLX interop functions
 void	close_window(t_data **data);
 int		render_frame(void);
-void	put_tile(char tile, int x, int y);
 int		exit_window(int keycode, t_data **data);
 void	close_window(t_data **data);
 int		keydown(int keycode, t_data **data);
