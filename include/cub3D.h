@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 13:19:48 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 15:22:58 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,13 @@ enum {
 
 // Data struct with window data
 typedef struct s_data {
+	// MLX
 	void	*mlx;
 	void	*win;
 	char	*addr;
 	int		endian;
+
+	// Map and textures
 	char	**map_file;
 	char	*east_name;
 	char	*west_name;
@@ -79,15 +82,26 @@ typedef struct s_data {
 	int		width;
 	int		height;
 
-	int		player_x;
-	int		player_y;
-	int		player_direction;
+	// Player info
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	move_speed;
+	double	rot_speed;
+
+	// Frame info
+	double	time;
+	double	old_time;
 }			t_data;
 
 // Libft functions
 void	*xalloc(size_t nitems, size_t size);
 void	*xfree(void *ptr);
 char	*gnl(int fd);
+int		ft_atoi(const char *str);
 char	*ft_strchr(const char *str, int c);
 size_t	ft_strlen(const char *str);
 int		ft_linelen(const char *str);
