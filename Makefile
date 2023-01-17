@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------#
 
 # Special variables
-DEFAULT_GOAL: all
+DEFAULT_GOAL: test # RBS
 .DELETE_ON_ERROR: $(NAME)
 .PHONY: all bonus clean fclean re
 
@@ -16,7 +16,7 @@ HIDE =	@
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address
 INCLUDE	=	-I $(INCDIR)
 LIBS	=	-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 RM		=	rm -f
@@ -76,3 +76,7 @@ val: re
 			--error-limit=no						\
 			--suppressions=./config/cub3D.supp	\
 			./$(NAME) ./assets/maps/basic_map.cub
+
+test: all
+	$(HIDE)clear
+	$(HIDE)./$(NAME) ./assets/maps/basic_map.cub
