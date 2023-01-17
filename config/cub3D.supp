@@ -39,3 +39,11 @@
    fun:malloc
    ...
 }
+{
+   <malloc_zone_memalign>
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:malloc_zone_memalign
+   ...
+}
