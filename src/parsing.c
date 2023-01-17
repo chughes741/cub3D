@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 13:19:58 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 15:55:39 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,26 @@ void grab_colors(void)
 		}
 		++i;
 	}
+	set_colors();
+}
+
+// Sets floor and ceiling colors
+void set_colors(void)
+{
+	t_data	*data;
+	char	**floor;
+	char	**ceiling;
+	int		i;
+
+	data = get_data();
+	floor = ft_split(data->floor_name, ',');
+	ceiling = ft_split(data->ceiling_name, ',');
+	i = -1;
+	while (floor[++i])
+		data->floor |= ft_atoi(floor[i]) << (24 - i * 8);
+	i = -1;
+	while (ceiling[++i])
+		data->ceiling |= ft_atoi(ceiling[i]) << (24 - i * 8);
 }
 
 // Moves map tiles from map_file to map
@@ -170,16 +190,16 @@ void init_player(char direction, int x, int y)
 	t_data	*data;
 
 	data = get_data();
-	data->player_x = x;
-	data->player_y = y;
+	data->pos_x = x;
+	data->pos_y = y;
 	if (direction == 'N')
-		data->player_direction = 0;
+		data->dir_x = -1; // TODO
 	if (direction == 'E')
-		data->player_direction = 90;
+		data->dir_x = -1; // TODO
 	if (direction == 'S')
-		data->player_direction = 180;
+		data->dir_x = -1; // TODO
 	if (direction == 'W')
-		data->player_direction = 270;
+		data->dir_x = -1; // TODO
 }
 
 // Gets height and width from map
