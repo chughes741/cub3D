@@ -67,6 +67,7 @@ fclean: clean
 re: fclean all
 
 val: re
+	$(HIDE)clear
 	$(HIDE)valgrind									\
 			--leak-check=full						\
 			--show-leak-kinds=all					\

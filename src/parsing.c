@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/16 16:11:23 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 13:12:25 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,14 @@ void grab_map(void)
 
 	data = get_data();
 	i = -1;
-	// write(STDOUT_FILENO, "...\n", 4);
 	while (data->map_file[++i])
 	{
-		if (ft_strchr("1 \0", data->map_file[i][0]) == NULL)
+		if (data->map_file[i][0] == '\n')
+		{
+			data->map_file = array_del_one(data->map_file, i);
+			--i;
+		}
+		else if (ft_strchr("1 ", data->map_file[i][0]) == NULL)
 			exit_error();
 	}
 	get_size();
@@ -144,9 +148,9 @@ void copy_map(void)
 	while (i < data->height)
 	{
 		j = 0;
-		while (data->map_file[i][j] && j < data->width)
+		while (j < data->width)
 		{
-			if (data->map_file[i][j] == ' ')
+			if (j >= ft_linelen(data->map_file[i]) || data->map_file[i][j] == ' ')
 				data->map[i][j] = SPACE;
 			else if (data->map_file[i][j] == '0')
 				data->map[i][j] = EMPTY;
@@ -154,8 +158,6 @@ void copy_map(void)
 				data->map[i][j] = WALL;
 			else if (ft_strchr("NESW", data->map_file[i][j]) != NULL)
 				data->map[i][j] = PLAYER;
-			else if (ft_strchr("\n\0", data->map_file[i][j]) == NULL)
-        exit_error();
 			++j;
 		}
 		++i;
@@ -166,16 +168,18 @@ void copy_map(void)
 void get_size(void)
 {
 	t_data	*data;
+	int		i;
 
 	data = get_data();
-	data->height = 0;
+	data->height = arraylen(data->map_file);
 	data->width = 0;
-	while (data->map_file[data->height])
+	i = 0;
+	while (i < data->height)
 	{
-		if (ft_linelen(data->map_file[data->height]) > data->width)
-			data->width = ft_linelen(data->map_file[data->height]);
-		++data->height;
-	}	
+		if (ft_strlen(data->map_file[i]) > (size_t)data->width)
+			data->width = ft_strlen(data->map_file[i]) - 1;
+		++i;
+	}
 }
 
 // Checks input and sets map_file height
@@ -186,8 +190,7 @@ void	check_input(int argc, char *path)
 	data = get_data();
 	if (argc != 2)
 		exit_error();
-	if (ft_strncmp(&path[ft_strlen(path) - 5], ".cub", 4))
-		;
-		// exit_error();
+	if (ft_strlen(path) >= 4 && ft_strncmp(&path[ft_strlen(path) - 4], ".cub", 4))
+		exit_error();
 	return ;
 }
