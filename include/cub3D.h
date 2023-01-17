@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/16 15:39:41 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 13:19:48 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ typedef struct s_data {
 	int		**map;
 	int		width;
 	int		height;
+
+	int		player_x;
+	int		player_y;
+	int		player_direction;
 }			t_data;
 
 // Libft functions
@@ -111,6 +115,7 @@ void	grab_textures(void);
 void	grab_colors(void);
 void	grab_map(void);
 void	copy_map(void);
+void	init_player(char direction, int x, int y);
 void	get_size(void);
 void	exit_error(void);
 

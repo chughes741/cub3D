@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 12:24:23 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 13:28:12 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,6 @@ void	init_data(int argc, char *argv[])
 	t_data	*d;
 
 	d = get_data();
-	d->map = NULL;
-	d->north_name = NULL;
-	d->south_name = NULL;
-	d->east_name = NULL;
-	d->west_name = NULL;
 	check_input(argc, argv[1]);
 	read_map(argv[1]);
 	parse_map();

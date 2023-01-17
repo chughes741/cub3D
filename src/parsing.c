@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 13:12:25 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 13:19:58 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,29 @@ void copy_map(void)
 			else if (data->map_file[i][j] == '1')
 				data->map[i][j] = WALL;
 			else if (ft_strchr("NESW", data->map_file[i][j]) != NULL)
-				data->map[i][j] = PLAYER;
+				init_player(data->map_file[i][j], i, j);
 			++j;
 		}
 		++i;
 	}
+}
+
+// Sets player direction and location
+void init_player(char direction, int x, int y)
+{
+	t_data	*data;
+
+	data = get_data();
+	data->player_x = x;
+	data->player_y = y;
+	if (direction == 'N')
+		data->player_direction = 0;
+	if (direction == 'E')
+		data->player_direction = 90;
+	if (direction == 'S')
+		data->player_direction = 180;
+	if (direction == 'W')
+		data->player_direction = 270;
 }
 
 // Gets height and width from map
