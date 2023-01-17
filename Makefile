@@ -7,7 +7,7 @@ DEFAULT_GOAL: all
 .DELETE_ON_ERROR: $(NAME)
 .PHONY: all bonus clean fclean re
 
-HIDE =
+HIDE =	@
 
 
 #------------------------------------------------------------------------------#
@@ -65,3 +65,13 @@ fclean: clean
 
 # Removes objects and executables and remakes
 re: fclean all
+
+val: re
+	$(HIDE)valgrind									\
+			--leak-check=full						\
+			--show-leak-kinds=all					\
+			--show-reachable=yes					\
+			--track-fds=yes							\
+			--error-limit=no						\
+			--suppressions=./config/cub3D.supp	\
+			./$(NAME) ./assets/maps/basic_map.cub
