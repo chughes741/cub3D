@@ -16,7 +16,7 @@ HIDE =	@
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address
+CFLAGS	=	-Wall -Werror -Wextra #-fsanitize=address
 INCLUDE	=	-I $(INCDIR)
 LIBS	=	-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 RM		=	rm -f
@@ -77,6 +77,6 @@ val: re
 			--suppressions=./config/cub3D.supp	\
 			./$(NAME) ./assets/maps/basic_map.cub
 
-test: all
+test: re
 	$(HIDE)clear
 	$(HIDE)./$(NAME) ./assets/maps/basic_map.cub
