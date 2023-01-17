@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 15:22:58 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/17 15:24:24 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ char	**arraydup(char **array);
 char	**array_realloc(char **ptr, int size);
 char	**array_del_one(char **array, int position);
 char	**free_array(char **array);
+char	**ft_split(char const *s, char c);
 
 // Data setup and teardown functions
 t_data	*get_data(void);
