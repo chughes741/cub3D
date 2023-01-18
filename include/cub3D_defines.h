@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:17:58 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/18 13:28:40 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/18 13:57:00 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 # define ROT_SPEED 0.1
 # define MOVE_SPEED 0.1
 # define Y 0
-# define X 0
+# define X 1
 
 // coord_t[0] = y, coord_t[1] = x
 typedef double[2]	coord_t;
+typedef int[2]		pair_t;
 typedef int			colour_t;
 
 // Enum for key codes

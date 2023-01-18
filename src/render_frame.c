@@ -6,11 +6,20 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/18 13:47:39 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/18 14:34:40 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+// Returns the fractional bits of num
+double	frac(double num)
+{
+	double fractional_part;
+
+	fractional_part = remainder(num, 1.0);
+	return (fractional_part);
+}
 
 void	mlx_pixel_img(int x, int y, int color)
 {
@@ -54,93 +63,117 @@ coord_t	ray_direction(int x)
 	return (ray_dir); 
 }
 
+// Length of ray from one x or y-side to next x or y-side
+coord_t	delta_distance(coord_t ray_dir)
+{
+	coord_t	delta_dst;
+
+	if (ray_dir[X] == 0)
+		delta_dst[X] = 0;
+	else
+		delta_dst[X] = fabs(1 / ray_dir[X]);
+	if (ray_dir[Y] == 0)
+		delta_dst[Y] = 0;
+	else
+		delta_dst[Y] = fabs(1 / ray_dir[Y]);
+	return (delta_dst);
+}
+
+// Direction to step in x or y-direction (either +1 or -1)
+coord_t	step_direction(coord_t *side_dst, coord_t delta_dst)
+{
+	t_data	*data;
+	coord_t	step;
+	
+	data = get_data();
+	if (ray_dir[X] < 0) {
+		step[X] = -1;
+		side_dst[X] = frac(data->pos[X]) * delta_dst[X];
+	} else {
+		step[X] = 1;
+		side_dst[X] = (1.0 + frac(data->pos[X])) * delta_dst[X];
+	}
+	if (ray_dir[Y] < 0) {
+		step[Y] = -1;
+		side_dst[Y] = frac(data->pos[Y]) * delta_dst[Y];
+	} else {
+		step[Y] = 1;
+		side_dst[Y] = (1.0 + frac)data->pos[Y])) * delta_dst[Y];
+	}
+	return (step);
+}
+
+int	find_wall(coord_t side_dst, coord_t step, coord_t delta_dst)
+{
+	t_data	data;
+	coord_t	map;
+	int hit;
+	int side;
+
+	data = get_data();
+	map[X] = data->map[X];
+	map[Y] = data->map[Y];
+	hit = 0;
+	while (hit == 0)
+	{
+		if (side_dst[X] < side_dst[Y])
+		{
+			side_dst[X] += delta_dst[X];
+			map[X] += step[X];
+			side = 0;
+		}
+		else
+		{
+			side_dst[Y] += delta_dst[Y];
+			map[Y] += step[Y];
+			side = 1;
+		}
+		if (data->map[map[X]][map[Y]] > 0)
+			hit = 1;
+	}
+	return (side);	
+}
+
+// Draws a vertical line onto img
+void	draw_line(t_data *d, coord_t ray_dir, coord_t delta_dst)
+{
+	coord_t side_dst;
+	coord_t	step;
+	double	perp_wall_dist;
+	int		draw_start;
+	int		draw_end;
+
+	step = step_direction(&side_dst, delta_dst);
+	if (find_wall(side_dst, step, delta_dst, map) == 0)
+		perp_wall_dist = (frac(d->pos[X]) + (1 - step[X]) / 2) / ray_dir[X];
+	else
+		perp_wall_dist = (frac(d->pos[Y]) + (1 - step[Y]) / 2) / ray_dir[Y];
+	draw_start = -(HEIGHT / perp_wall_dist) / 2 + HEIGHT / 2;
+	if(draw_start < 0)
+		draw_start = 0;
+	draw_end = (HEIGHT / perp_wall_dist) / 2 + HEIGHT / 2;
+	if(draw_end >= HEIGHT)
+		draw_end = HEIGHT - 1;
+
+	ver_line(d, x, draw_start, draw_end, side);
+}
+
+
 // Renders next frame from map to window
 int	render_frame(void)
 {
 	t_data	*data;
 	coord_t ray_dir;
+	coord_t delta_dst;
 	int	x;
 
 	data = get_data();
 	x = 0;
 	while (x < WIDTH)
 	{
-
 		ray_dir = ray_direction(x);
-		
-		int map_x = (int)data->pos[X];
-		int map_y = (int)data->pos[Y];
-
-		//length of ray from current position to next x or y-side
-		coord_t side_dist;
-
-		//length of ray from one x or y-side to next x or y-side
-		coord_t delta_dist;
-		if (ray_dir[X] == 0)
-			delta_dist[X] = 0;
-		else
-			delta_dist[X] = fabs(1 / ray_dir[X]);
-		if (ray_dir[Y] == 0)
-			delta_dist[Y] = 0;
-		else
-			delta_dist[Y] = fabs(1 / ray_dir[Y]);
-		double perp_wall_dist;
-		
-		//what direction to step in x or y-direction (either +1 or -1)
-		int step_x;
-		int step_y;
-		
-		int hit = 0; //was there a wall hit?
-		int side; //was a NS or a EW wall hit?
-
-		if (ray_dir[X] < 0) {
-			step_x = -1;
-			side_dist[X] = (data->pos[X] - map_x) * delta_dist[X];
-		} else {
-			step_x = 1;
-			side_dist[X] = (map_x + 1.0 - data->pos[X]) * delta_dist[X];
-		}
-		if (ray_dir[Y] < 0) {
-			step_y = -1;
-			side_dist[Y] = (data->pos[Y] - map_y) * delta_dist[Y];
-		} else {
-			step_y = 1;
-			side_dist[Y] = (map_y + 1.0 - data->pos[Y]) * delta_dist[Y];
-		}
-
-		while (hit == 0) {
-			//jump to next map square, OR in x-direction, OR in y-direction
-			if (side_dist[X] < side_dist[Y]) {
-				side_dist[X] += delta_dist[X];
-				map_x += step_x;
-				side = 0;
-			} else {
-				side_dist[Y] += delta_dist[Y];
-				map_y += step_y;
-				side = 1;
-			}
-			//Check if ray has hit a wall
-			if (data->map[map_x][map_y] > 0)
-				hit = 1;
-		}
-		if (side == 0)
-			perp_wall_dist = (map_x - data->pos[X] + (1 - step_x) / 2) / ray_dir[X];
-		else
-			perp_wall_dist = (map_y - data->pos[Y] + (1 - step_y) / 2) / ray_dir[Y];
-
-		//Calculate HEIGHT of line to draw on screen
-		int line_height = (int)(HEIGHT / perp_wall_dist);
-
-		//calculate lowest and highest pixel to fill in current stripe
-		int draw_start = -line_height / 2 + HEIGHT / 2;
-		if(draw_start < 0)
-			draw_start = 0;
-		int draw_end = line_height / 2 + HEIGHT / 2;
-		if(draw_end >= HEIGHT)
-			draw_end = HEIGHT - 1;
-
-		ver_line(data, x, draw_start, draw_end, side);
-		
+		delta_dst = delta_distance(ray_dir);
+		draw_line(data, ray_dir);
 		x++;
 	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
