@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/18 14:34:40 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/18 14:37:03 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ double	frac(double num)
 	return (fractional_part);
 }
 
+// Writes pixel to mlx_img
 void	mlx_pixel_img(int x, int y, int color)
 {
 	t_data	*data;
@@ -31,6 +32,7 @@ void	mlx_pixel_img(int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+// Puts a vertical line of pixels to the img
 void	ver_line(t_data *data, int x, int y1, int y2, int side)
 {
 	int	pixel;
@@ -103,6 +105,7 @@ coord_t	step_direction(coord_t *side_dst, coord_t delta_dst)
 	return (step);
 }
 
+// Steps forward until reaching a wall
 int	find_wall(coord_t side_dst, coord_t step, coord_t delta_dst)
 {
 	t_data	data;
