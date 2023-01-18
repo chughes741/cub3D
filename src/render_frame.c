@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 18:27:54 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/18 13:47:39 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,50 +40,50 @@ void	ver_line(t_data *data, int x, int y1, int y2, int side)
 		mlx_pixel_img(x, pixel, data->ceiling);
 }
 
+// Returns a coord_t with the ray direction vector
+coord_t	ray_direction(int x)
+{
+	t_data	*data;
+	coord_t	ray_dir;
+	double	camera_x;
+
+	data = get_data();
+	camera_x = 2 * x / WIDTH.0 - 1.0;
+	ray_dir[X] = data->dir[X] + data->plane[X] * camera_x;
+	ray_dir[Y] = data->dir[Y] + data->plane[Y] * camera_x;
+	return (ray_dir); 
+}
+
 // Renders next frame from map to window
 int	render_frame(void)
 {
 	t_data	*data;
+	coord_t ray_dir;
 	int	x;
 
 	data = get_data();
 	x = 0;
 	while (x < WIDTH)
 	{
-		double camera_x;
-		double ray_dir_x;
-		double ray_dir_y;
-		if (x != 0)
-		{
-			camera_x = 2 * x / (double)WIDTH - 1;
-			ray_dir_x = data->dir_x + data->plane_x * camera_x;
-			ray_dir_y = data->dir_y + data->plane_y * camera_x;
-		}
-		else
-		{
-			camera_x = 0;
-			ray_dir_x = data->dir_x;
-			ray_dir_y = data->dir_y;
-		} 
+
+		ray_dir = ray_direction(x);
 		
-		int map_x = (int)data->pos_x;
-		int map_y = (int)data->pos_y;
+		int map_x = (int)data->pos[X];
+		int map_y = (int)data->pos[Y];
 
 		//length of ray from current position to next x or y-side
-		double side_dist_x;
-		double side_dist_y;
-		
+		coord_t side_dist;
+
 		//length of ray from one x or y-side to next x or y-side
-		double delta_dist_x;
-		if (ray_dir_x == 0)
-			delta_dist_x = 0;
+		coord_t delta_dist;
+		if (ray_dir[X] == 0)
+			delta_dist[X] = 0;
 		else
-			delta_dist_x = fabs(1 / ray_dir_x);
-		double delta_dist_y;
-		if (ray_dir_y == 0)
-			delta_dist_y = 0;
+			delta_dist[X] = fabs(1 / ray_dir[X]);
+		if (ray_dir[Y] == 0)
+			delta_dist[Y] = 0;
 		else
-			delta_dist_y = fabs(1 / ray_dir_y);
+			delta_dist[Y] = fabs(1 / ray_dir[Y]);
 		double perp_wall_dist;
 		
 		//what direction to step in x or y-direction (either +1 or -1)
@@ -93,29 +93,29 @@ int	render_frame(void)
 		int hit = 0; //was there a wall hit?
 		int side; //was a NS or a EW wall hit?
 
-		if (ray_dir_x < 0) {
+		if (ray_dir[X] < 0) {
 			step_x = -1;
-			side_dist_x = (data->pos_x - map_x) * delta_dist_x;
+			side_dist[X] = (data->pos[X] - map_x) * delta_dist[X];
 		} else {
 			step_x = 1;
-			side_dist_x = (map_x + 1.0 - data->pos_x) * delta_dist_x;
+			side_dist[X] = (map_x + 1.0 - data->pos[X]) * delta_dist[X];
 		}
-		if (ray_dir_y < 0) {
+		if (ray_dir[Y] < 0) {
 			step_y = -1;
-			side_dist_y = (data->pos_y - map_y) * delta_dist_y;
+			side_dist[Y] = (data->pos[Y] - map_y) * delta_dist[Y];
 		} else {
 			step_y = 1;
-			side_dist_y = (map_y + 1.0 - data->pos_y) * delta_dist_y;
+			side_dist[Y] = (map_y + 1.0 - data->pos[Y]) * delta_dist[Y];
 		}
 
 		while (hit == 0) {
 			//jump to next map square, OR in x-direction, OR in y-direction
-			if (side_dist_x < side_dist_y) {
-				side_dist_x += delta_dist_x;
+			if (side_dist[X] < side_dist[Y]) {
+				side_dist[X] += delta_dist[X];
 				map_x += step_x;
 				side = 0;
 			} else {
-				side_dist_y += delta_dist_y;
+				side_dist[Y] += delta_dist[Y];
 				map_y += step_y;
 				side = 1;
 			}
@@ -124,9 +124,9 @@ int	render_frame(void)
 				hit = 1;
 		}
 		if (side == 0)
-			perp_wall_dist = (map_x - data->pos_x + (1 - step_x) / 2) / ray_dir_x;
+			perp_wall_dist = (map_x - data->pos[X] + (1 - step_x) / 2) / ray_dir[X];
 		else
-			perp_wall_dist = (map_y - data->pos_y + (1 - step_y) / 2) / ray_dir_y;
+			perp_wall_dist = (map_y - data->pos[Y] + (1 - step_y) / 2) / ray_dir[Y];
 
 		//Calculate HEIGHT of line to draw on screen
 		int line_height = (int)(HEIGHT / perp_wall_dist);

@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 17:02:46 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/18 13:28:45 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_data(int argc, char *argv[])
 	check_input(argc, argv[1]);
 	read_map(argv[1]);
 	parse_map();
-	d->plane_y = 0.66;
+	d->plane[Y] = 0.66;
 	return ;
 }
 

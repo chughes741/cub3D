@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 18:19:16 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/18 13:32:02 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,16 +190,16 @@ void init_player(char direction, int x, int y)
 	t_data	*data;
 
 	data = get_data();
-	data->pos_x = x;
-	data->pos_y = y;
+	data->pos[X] = x;
+	data->pos[Y] = y;
 	if (direction == 'N')
-		data->dir_x = -1;
+		data->dir[X] = -1;
 	if (direction == 'E')
-		data->dir_y = 1;
+		data->dir[Y] = 1;
 	if (direction == 'S')
-		data->dir_x = 1;
+		data->dir[X] = 1;
 	if (direction == 'W')
-		data->dir_y = -1;
+		data->dir[Y] = -1;
 }
 
 // Gets height and width from map

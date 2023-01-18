@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 17:18:46 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/18 13:27:14 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,20 @@ typedef struct s_data {
 	void	*west;
 	void	*north;
 	void	*south;
-	int		floor;
-	int		ceiling;
+	color_t	floor;
+	color_t	ceiling;
 	int		width;
 	int		height;
 	int		**map;
 
 	// Camera info
+	coord_t	pos;
 	double	pos_x;
 	double	pos_y;
+	coord_t	dir;
 	double	dir_x;
 	double	dir_y;
+	coord_t	plane;
 	double	plane_x;
 	double	plane_y;
 
