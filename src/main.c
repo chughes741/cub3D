@@ -6,7 +6,7 @@
 /*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/18 18:56:24 by minkim           ###   ########.fr       */
+/*   Updated: 2023/01/19 13:11:09 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,17 @@ int main(int argc, char **argv)
 	// mlx_loop_hook(d->mlx, render_frame, NULL);
 	// mlx_loop(d->mlx);
 
+	// for (int i = 0; i < d->height; i++)
+	// {
+	// 	for (int j = 0; j < d->width; j++)
+	// 	{
+	// 		printf("%d", d->map[i][j]);
+	// 	}
+	// 	printf("\n");
+	// }
 	for (int i = 0; i < d->height; i++)
 	{
-		for (int j = 0; j < d->width; j++)
-		{
-			printf("%d", d->map[i][j]);
-		}
-		printf("\n");
+		printf("%s", d->map_file[i]);
 	}
 	
 	

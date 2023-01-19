@@ -6,7 +6,7 @@
 /*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/18 18:26:41 by minkim           ###   ########.fr       */
+/*   Updated: 2023/01/19 16:50:07 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <math.h>
 # include <OpenGL/gl3.h>
-# include <mlx.h>
+# include "../mlx/mlx.h"
 
 # include <stdlib.h>	// malloc, free, exit
 # include <fcntl.h>		// open
@@ -110,9 +110,13 @@ void	exit_error(void);
 void	check_map(void);
 int		check_player(void);
 int		check_space(void);
-int		check_closed(void);
-int		check_multi(void);
-int		flood_fill(int x, int y);
+int		check_closed_player(void);
+int		check_first_row(void);
+int		check_last_row(void);
+int		check_left(void);
+int		check_right(void);
+int		flood_fill_player(int x, int y);
+int		flood_fill_first_zero(int x, int y);
 
 // MLX interop functions
 void	close_window(t_data **data);

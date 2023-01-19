@@ -6,7 +6,7 @@
 /*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:47:02 by minkim            #+#    #+#             */
-/*   Updated: 2023/01/18 20:01:06 by minkim           ###   ########.fr       */
+/*   Updated: 2023/01/19 17:26:02 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int check_player(void)
 		}
 		i++;
 	}
-	if (flag == 0 || flag > 1)
+	if (flag != 1)
 		return (1);
 	return (0);
 }
@@ -72,37 +72,223 @@ int check_space(void)
 	return (0);
 }
 
-int flood_fill(int x, int y)
+int flood_fill_player(int x, int y)
 {
 	t_data	*data;
 	
 	data = get_data();
-	if (data->map[x][y] == 0)
+	if (x >= data->height || data->map_file[x][y] == '\n')
+		exit_error();
+	if (data->map_file[x][y] == '0')
 	{
-		data->map[x][y] = 4;
-		flood_fill(x+1, y);
-		flood_fill(x, y+1);
-		flood_fill(x-1, y);
-		flood_fill(x, y-1);
+		data->map_file[x][y] = '=';
+		flood_fill_player(x+1, y);
+		flood_fill_player(x, y+1);
+		flood_fill_player(x-1, y);
+		flood_fill_player(x, y-1);
 	}
 	return (0);
 }
 
 // Check if the map is properly closed
-int check_closed(void)
+int check_closed_player(void)
 {
 	t_data	*data;
 
 	data = get_data();
-	data->map[(int)data->pos_x][(int)data->pos_y] = 0;
-	return flood_fill(data->pos_x, data->pos_y);
+	data->map_file[(int)data->pos_x][(int)data->pos_y] = '0';
+	return flood_fill_player(data->pos_x, data->pos_y);
 }
 
-int check_multi(void)
+int flood_fill_first_zero(int x, int y)
 {
 	t_data	*data;
+	
+	data = get_data();
+	// if (x == 0 || y == 0)
+	// 	exit_error();
+	if (x >= data->height || data->map_file[x][y] == '\n' || data->map_file[x][y] == ' ')
+		exit_error();
+	if (data->map_file[x][y] == '0')
+	{
+		data->map_file[x][y] = '=';
+		flood_fill_first_zero(x+1, y);
+		flood_fill_first_zero(x, y+1);
+		flood_fill_first_zero(x-1, y);
+		flood_fill_first_zero(x, y-1);
+	}
+	return (0);
+}
+
+int	check_surround_first_zero(int i, int j)
+{
+	t_data	*data;
+	
+	data = get_data();
+	if (i < 1 || j < 1)
+		exit_error();
+	if (data->map_file[i][j-1] == ' ')
+		exit_error();
+	if (data->map_file[i-1][j-1] == '1' && \
+		data->map_file[i-1][j] == '1' && data->map_file[i][j-1] == '1')
+		return (0);
+	else
+		exit_error();
+	return (1);
+}
+
+
+int	check_closed_first_zero(void)
+{
+	t_data	*data;
+	int		i;
+	int		j;
 
 	data = get_data();
+	i = 0;
+	while (data->map_file[i])
+	{
+		j = 0;
+		while (data->map_file[i][j])
+		{
+			if (data->map_file[i][j] == '0')
+			{
+				if (check_surround_first_zero(i, j))
+					return (0);
+				return flood_fill_first_zero(i, j);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+void check_surround_last_row(int i, int j)
+{
+	t_data	*data;
+	
+	data = get_data();
+	if (data->map_file[i-1][j] != '1' || data->map_file[i][j+1] != '1')
+		exit_error();
+}
+
+int	check_surround_last_one(int i, int j)
+{
+	t_data	*data;
+	
+	data = get_data();
+	if (data->map_file[i-1][j] != '1' || data->map_file[i][j-1] != '1')
+		exit_error();
+	return (0);
+}
+
+int	check_last_row(void)
+{
+	t_data	*data;
+	int		i;
+	int		flag;
+
+	data = get_data();
+	flag = 0;
+	i = 0;
+	while (data->map_file[data->height-1][i])
+	{
+		if (ft_strchr("1 ", data->map_file[data->height-1][i]) == NULL)
+			exit_error();
+		if (flag == 0 && data->map_file[data->height-1][i] == '1')
+		{
+			check_surround_last_row(data->height-1, i);
+			flag = 1;
+		}
+		i++;
+	}
+	while (data->map_file[data->height-1][--i])
+	{
+		if (data->map_file[data->height-2][i] && data->map_file[data->height-2][i] != '\n' && data->map_file[data->height-1][i] == '1')
+			return check_surround_last_one(data->height-1, i);
+	}
+	return (0);
+}
+
+int	check_surround_first_one(int i, int j)
+{
+	t_data	*data;
+	
+	data = get_data();
+	if (data->map_file[i+1][j] != '1' || data->map_file[i][j-1] != '1')
+		exit_error();
+	return (0);
+}
+
+int	check_first_row(void)
+{
+	t_data	*data;
+	int		i;
+
+	data = get_data();
+	i = 0;
+	while (data->map_file[0][i] != '\n')
+	{
+		if (ft_strchr("1 ", data->map_file[0][i]) == NULL)
+			exit_error();
+		i++;
+	}
+	return (0);
+}
+
+int	check_left(void)
+{
+	t_data	*data;
+	int		i;
+	int		j;
+
+	data = get_data();
+	i = 0;
+	while (data->map_file[i])
+	{
+		j = 0;
+		while (data->map_file[i][j])
+		{
+			while (data->map_file[i][j] == ' ')
+				j++;
+			if (data->map_file[i][j] == '1')
+				break ;
+			else
+				exit_error();
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	check_right(void)
+{
+	t_data	*data;
+	int		i;
+	int		j;
+
+	data = get_data();
+	i = 0;
+	while (data->map_file[i])
+	{
+		j = 0;
+		while (data->map_file[i][j])
+		{
+			if (data->map_file[i][j] == '\n')
+			{
+				while (data->map_file[i][--j] == ' ')
+					;
+				if (data->map_file[i][j] == '1')
+					break ;
+				else
+					exit_error();
+			}
+			j++;
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -112,13 +298,21 @@ void check_map(void)
 	t_data	*data;
 
 	data = get_data();
+	if (check_first_row())
+		exit_error();
+	if (check_last_row())
+		exit_error();
+	if (check_left())
+		exit_error();
+	if (check_right())
+		exit_error();
 	if (check_player())
 		exit_error();
 	if (check_space())
 		exit_error();
-	// if (check_closed())
-	// 	exit_error();
-	// check_multi();
-    
+	if (check_closed_player())
+		exit_error();
+	if (check_closed_first_zero())
+		exit_error();
 	return ;
 }

@@ -18,7 +18,7 @@ HIDE =	@
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra #-fsanitize=address
 INCLUDE	=	-I $(INCDIR)
-LIBS	=	-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+LIBS	=	-Lmlx -lmlx -framework OpenGL -framework AppKit
 RM		=	rm -f
 
 # Output file name
