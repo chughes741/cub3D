@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/18 13:27:14 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/18 18:26:41 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,17 @@ typedef struct s_data {
 	void	*west;
 	void	*north;
 	void	*south;
-	color_t	floor;
-	color_t	ceiling;
+	int		floor;
+	int		ceiling;
 	int		width;
 	int		height;
 	int		**map;
 
 	// Camera info
-	coord_t	pos;
 	double	pos_x;
 	double	pos_y;
-	coord_t	dir;
 	double	dir_x;
 	double	dir_y;
-	coord_t	plane;
 	double	plane_x;
 	double	plane_y;
 
@@ -96,7 +93,7 @@ t_data	*get_data(void);
 void	init_data(int argc, char *argv[]);
 void	del_data(void);
 
-// Map parsing checks
+// Map parsingvoid checks
 void	check_input(int argc, char *path);
 void	read_map(char *map_name);
 void	parse_map(void);
@@ -108,6 +105,14 @@ void	init_player(char direction, int x, int y);
 void	get_size(void);
 void	set_colors(void);
 void	exit_error(void);
+
+// Map validation checks
+void	check_map(void);
+int		check_player(void);
+int		check_space(void);
+int		check_closed(void);
+int		check_multi(void);
+int		flood_fill(int x, int y);
 
 // MLX interop functions
 void	close_window(t_data **data);
