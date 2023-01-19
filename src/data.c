@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 17:02:46 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/19 17:06:15 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,18 @@ t_data	*get_data(void)
 // Initialized data struct
 void	init_data(int argc, char *argv[])
 {
-	t_data	*d;
+	t_data	*data;
 
-	d = get_data();
+	data = get_data();
 	check_input(argc, argv[1]);
 	read_map(argv[1]);
 	parse_map();
-	d->plane_y = 0.66;
+	data->plane_y = 0.66;
+	data->tex = xalloc(4, sizeof(int**));
+	data->tex[NORTH] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
+	data->tex[EAST] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
+	data->tex[SOUTH] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
+	data->tex[WEST] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
 	return ;
 }
 

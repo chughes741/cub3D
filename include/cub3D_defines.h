@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:17:58 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 14:03:12 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/19 16:52:07 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 # define WIDTH 1200
 # define HEIGHT 900
+# define TEX_WIDTH 64
+# define TEX_HEIGHT 64
 # define ROT_SPEED 0.1
 # define MOVE_SPEED 0.1
 # define X 1
@@ -49,6 +51,13 @@ enum {
 	WALL = 1,
 	PLAYER = 2,
 	SPACE = 3
+};
+
+enum {
+	NORTH = 0,
+	EAST = 1,
+	SOUTH = 2,
+	WEST = 3
 };
 
 #endif // CUB3D_DEFINES_H

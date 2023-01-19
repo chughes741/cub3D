@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 14:18:32 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/19 17:06:24 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,14 @@ typedef struct s_data {
 
 	// Map and textures
 	char	**map_file;
-	char	*east_name;
-	char	*west_name;
-	char	*north_name;
-	char	*south_name;
+	char	*east_path;
+	char	*west_path;
+	char	*north_path;
+	char	*south_path;
 	char	*floor_name;
 	char	*ceiling_name;
 
-	void	*east;
-	void	*west;
-	void	*north;
-	void	*south;
+	int		**tex;
 	int		floor;
 	int		ceiling;
 	int		width;
@@ -68,6 +65,18 @@ typedef struct s_data {
 	double	time;
 	double	old_time;
 }			t_data;
+
+// MLX image information
+typedef struct	s_img
+{
+	void	*img;
+	void	*addr;
+	int		l_size;
+	int		bpp;
+	int		endian;
+	int		width;
+	int		height;
+}			t_img;
 
 // Frame information
 typedef struct s_frame {
@@ -128,6 +137,7 @@ int		exit_window(int keycode, t_data **data);
 void	close_window(t_data **data);
 int		keydown(int keycode, t_data **data);
 void	mlx_pixel_img(int x, int y, int color);
+void	load_textures(t_data *data);
 
 // Movement functions
 void	move_north(t_data **data);

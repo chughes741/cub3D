@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 18:19:16 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/19 16:50:11 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,27 @@ void grab_textures(void)
 	i = 0;
 	while (data->map_file[i])
 	{
-		if (ft_strncmp(data->map_file[i], "NO ", 3) == 0 && data->north_name == NULL)
+		if (ft_strncmp(data->map_file[i], "NO ", 3) == 0 && data->north_path == NULL)
 		{
-			data->north_name = ft_strdup(data->map_file[i] + 4);
+			data->north_path = ft_strdup(data->map_file[i] + 4);
 			data->map_file = array_del_one(data->map_file, i);
 			--i;
 		}
-		else if (ft_strncmp(data->map_file[i], "SO ", 3) == 0 && data->south_name == NULL)
+		else if (ft_strncmp(data->map_file[i], "SO ", 3) == 0 && data->south_path == NULL)
 		{
-			data->south_name = ft_strdup(data->map_file[i] + 4);
+			data->south_path = ft_strdup(data->map_file[i] + 4);
 			data->map_file = array_del_one(data->map_file, i);	
 			--i;
 		}
-		else if (ft_strncmp(data->map_file[i], "WE ", 3) == 0 && data->west_name == NULL)
+		else if (ft_strncmp(data->map_file[i], "WE ", 3) == 0 && data->west_path == NULL)
 		{
-			data->west_name = ft_strdup(data->map_file[i] + 4);
+			data->west_path = ft_strdup(data->map_file[i] + 4);
 			data->map_file = array_del_one(data->map_file, i);	
 			--i;
 		}
-		else if (ft_strncmp(data->map_file[i], "EA ", 3) == 0 && data->east_name == NULL)
+		else if (ft_strncmp(data->map_file[i], "EA ", 3) == 0 && data->east_path == NULL)
 		{
-			data->east_name = ft_strdup(data->map_file[i] + 4);
+			data->east_path = ft_strdup(data->map_file[i] + 4);
 			data->map_file = array_del_one(data->map_file, i);	
 			--i;
 		}
