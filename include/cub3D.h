@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 17:18:46 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/19 14:18:32 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>	// close, read
 # include <stdio.h>		// printf, perror
 # include <string.h>	// strerror
+# include <stdbool.h>	// bool
 
 # include "cub3D_defines.h"
 
@@ -68,6 +69,20 @@ typedef struct s_data {
 	double	old_time;
 }			t_data;
 
+// Frame information
+typedef struct s_frame {
+	int		x;
+	double	camera_x;
+	double	ray_dir[2];
+	int		map[2];
+	double	side_dst[2];
+	double	delta_dst[2];
+	int		step[2];
+	int		side;
+	bool	hit;
+	int		line_height;
+}			t_frame;
+
 // Libft functions
 void	*xalloc(size_t nitems, size_t size);
 void	*xfree(void *ptr);
@@ -112,6 +127,7 @@ int		render_frame(void);
 int		exit_window(int keycode, t_data **data);
 void	close_window(t_data **data);
 int		keydown(int keycode, t_data **data);
+void	mlx_pixel_img(int x, int y, int color);
 
 // Movement functions
 void	move_north(t_data **data);

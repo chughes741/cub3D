@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:17:58 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/17 17:18:49 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/19 14:03:12 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define HEIGHT 900
 # define ROT_SPEED 0.1
 # define MOVE_SPEED 0.1
+# define X 1
+# define Y 0
 
 // Enum for key codes
 enum {
