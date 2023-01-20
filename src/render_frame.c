@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 14:06:45 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/20 15:12:54 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,23 @@ void	ray_length(t_frame *frame)
 // Evaluates distance to wall hit
 void	side_distance(t_data *data, t_frame *frame)
 {
-	if (frame->ray_dir[X] < 0) {
+	if (frame->ray_dir[X] < 0)
+	{
 		frame->step[X] = -1;
 		frame->side_dst[X] = (data->pos[X] - frame->map[X]) * frame->delta_dst[X];
-	} else {
+	}
+	else
+	{
 		frame->step[X] = 1;
 		frame->side_dst[X] = (frame->map[X] + 1.0 - data->pos[X]) * frame->delta_dst[X];
 	}
-	if (frame->ray_dir[Y] < 0) {
+	if (frame->ray_dir[Y] < 0)
+	{
 		frame->step[Y] = -1;
 		frame->side_dst[Y] = (data->pos[Y] - frame->map[Y]) * frame->delta_dst[Y];
-	} else {
+	}
+	else
+	{
 		frame->step[Y] = 1;
 		frame->side_dst[Y] = (frame->map[Y] + 1.0 - data->pos[X]) * frame->delta_dst[Y];
 	}
@@ -70,11 +76,17 @@ void	check_hit(t_data *data, t_frame *frame)
 		if (frame->side_dst[X] < frame->side_dst[Y]) {
 			frame->side_dst[X] += frame->delta_dst[X];
 			frame->map[X] += frame->step[X];
-			frame->side = 0;
+			if (frame->step[X] > 0)
+				frame->side = NORTH;
+			else
+				frame->side = SOUTH;
 		} else {
 			frame->side_dst[Y] += frame->delta_dst[Y];
 			frame->map[Y] += frame->step[Y];
-			frame->side = 1;
+			if (frame->step[Y] > 0)
+				frame->side = EAST;
+			else
+				frame->side = WEST;
 		}
 		//Check if ray has hit a wall
 		if (data->map[frame->map[X]][frame->map[Y]] > 0)
@@ -89,61 +101,65 @@ void	get_line_height(t_data *data, t_frame *frame)
 
 	temp[X] = (frame->map[X] - data->pos[X] + (1 - frame->step[X]) / 2);
 	temp[Y] = (frame->map[Y] - data->pos[Y] + (1 - frame->step[Y]) / 2);
-	if (frame->side == 0)
+	if (frame->side == NORTH || frame->side == SOUTH)
 		frame->perp_dst = temp[X] / frame->ray_dir[X];
-	else
+	if (frame->side == EAST || frame->side == WEST)
 		frame->perp_dst = temp[Y] / frame->ray_dir[Y];
 	frame->line_height = (int)(HEIGHT / frame->perp_dst);
+}
+
+// Finds x value of ray cast on a wall
+void	wall_texture_x(t_data *data, t_frame *frame)
+{
+	if (frame->side == NORTH || frame->side == SOUTH)
+		frame->wall_x = data->pos[Y] + frame->perp_dst * frame->ray_dir[Y];
+	if (frame->side == EAST || frame->side == WEST)
+		frame->wall_x = data->pos[X] + frame->perp_dst * frame->ray_dir[X];
+	frame->wall_x -= floor(frame->wall_x);	
+}
+
+// Gets line height of texture to draw
+void	draw_length(t_frame *frame)
+{
+	frame->draw_start = -frame->line_height / 2 + HEIGHT / 2;
+	frame->draw_end = frame->line_height / 2 + HEIGHT / 2;
+	if(frame->draw_start < 0)
+		frame->draw_start = 0;
+	if(frame->draw_end >= HEIGHT)
+		frame->draw_end = HEIGHT - 1;
 }
 
 // Draws full vertical line to data->img
 void	draw_line(t_data *data, t_frame *frame)
 {
-	int draw_start;
-	int draw_end;
-	int	pixel;
-	int	color = 0xFFFF00;
+	int		pixel;
+	int		color = 0xFFFF00;
+	int 	tex[2];
+	double	tex_step; 
+	double	texPos;
 
-	// calculate value of wallX
-	double wallX;
-	if (frame->side == 0)
-		wallX = data->pos[Y] + frame->perp_dst * frame->ray_dir[Y];
-	else
-		wallX = data->pos[X] + frame->perp_dst * frame->ray_dir[X];
-	wallX -= floor(wallX);
-
+	wall_texture_x(data, frame);
 	// x coordinate on the texture
-	int texX;
-	texX = wallX * TEX_WIDTH;
-	if (frame->side == 0 && frame->ray_dir[X] > 0)
-		texX = TEX_WIDTH - texX - 1;
-	if (frame->side == 1 && frame->ray_dir[Y] < 0)
-		texX = TEX_WIDTH - texX - 1;
+	tex[X] = frame->wall_x * TEX_WIDTH;
+	if ((frame->side == NORTH || frame->side == SOUTH) && frame->ray_dir[X] > 0)
+		tex[X] = TEX_WIDTH - tex[X] - 1;
+	if ((frame->side == EAST || frame->side == WEST) && frame->ray_dir[Y] < 0)
+		tex[X] = TEX_WIDTH - tex[X] - 1;
+	draw_length(frame);
 
-	draw_start = -frame->line_height / 2 + HEIGHT / 2;
-	draw_end = frame->line_height / 2 + HEIGHT / 2;
-	if(draw_start < 0)
-		draw_start = 0;
-	if(draw_end >= HEIGHT)
-		draw_end = HEIGHT - 1;
-	if (frame->side == 1)
-		color = color / 2;
 	pixel = -1;
-	while (++pixel < draw_start)
+	while (++pixel < frame->draw_start)
 		mlx_pixel_img(frame->x, pixel, data->floor);
 
-	double step = 1.0 * TEX_HEIGHT / frame->line_height;
-	double texPos = (draw_start - HEIGHT / 2 + frame->line_height / 2) * step;
-	int texY;
-	while (++pixel < draw_end) {
-		// mlx_pixel_img(frame->x, pixel, color);
-
-		texY = (int)texPos & (TEX_HEIGHT - 1);
-		texPos += step;
-		color = data->tex[NORTH][TEX_HEIGHT * texY + texX];
+	tex_step = 1.0 * TEX_HEIGHT / frame->line_height;
+	texPos = (frame->draw_start - HEIGHT / 2 + frame->line_height / 2) * tex_step;
+	while (++pixel < frame->draw_end)
+	{
+		tex[Y] = (int)texPos & (TEX_HEIGHT - 1);
+		texPos += tex_step;
+		color = data->tex[frame->side][TEX_HEIGHT * tex[Y] + tex[X]];
 		mlx_pixel_img(frame->x, pixel, color);
 	}
-
 	while (++pixel < HEIGHT)
 		mlx_pixel_img(frame->x, pixel, data->ceiling);
 }
