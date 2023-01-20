@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 17:06:24 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/20 13:04:49 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ char	**array_realloc(char **ptr, int size);
 char	**array_del_one(char **array, int position);
 char	**free_array(char **array);
 char	**ft_split(char const *s, char c);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 // Data setup and teardown functions
 t_data	*get_data(void);
@@ -128,7 +129,8 @@ void	copy_map(void);
 void	init_player(char direction, int x, int y);
 void	get_size(void);
 void	set_colors(void);
-void	exit_error(void);
+void	exit_error(char *message);
+void	check_map(void);
 
 // MLX interop functions
 void	close_window(t_data **data);

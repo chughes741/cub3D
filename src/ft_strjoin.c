@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_error.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 16:29:27 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 13:02:36 by chughes          ###   ########.fr       */
+/*   Created: 2022/03/29 13:51:26 by chughes           #+#    #+#             */
+/*   Updated: 2023/01/20 13:03:37 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-// Called to exit program and display error
-void	exit_error(char *message)
+// Joins 's1' and 's2' into rtn string, does not free
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	t_data	*data;
-	char	*msg;
+	char	*rtn;
+	int		i;
+	int		j;
 
-	data = get_data();
-	msg = ft_strjoin("Error ", message);
-	del_data();
-	perror(msg);
-	msg = xfree(msg);
-	exit(1);
+	i = 0;
+	j = 0;
+	rtn = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (rtn == NULL)
+		return (NULL);
+	while (s1[i])
+	{
+		rtn[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		rtn[i + j] = s2[j];
+		j++;
+	}
+	rtn[i + j] = '\0';
+	return (rtn);
 }
