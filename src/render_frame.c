@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 16:25:16 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/20 14:06:45 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	ray_direction(t_data *data, t_frame *frame)
 	if (frame->x != 0)
 	{
 		frame->camera_x = 2 * frame->x / (double)WIDTH - 1;
-		frame->ray_dir[X] = data->dir_x + data->plane_x * frame->camera_x;
-		frame->ray_dir[Y] = data->dir_y + data->plane_y * frame->camera_x;
+		frame->ray_dir[X] = data->dir[X] + data->plane[X] * frame->camera_x;
+		frame->ray_dir[Y] = data->dir[Y] + data->plane[Y] * frame->camera_x;
 	}
 	else
 	{
 		frame->camera_x = 0;
-		frame->ray_dir[X] = data->dir_x;
-		frame->ray_dir[Y] = data->dir_y;
+		frame->ray_dir[X] = data->dir[X];
+		frame->ray_dir[Y] = data->dir[Y];
 	} 
 }
 
@@ -42,23 +42,22 @@ void	ray_length(t_frame *frame)
 		frame->delta_dst[Y] = fabs(1 / frame->ray_dir[Y]);
 }
 
-
 // Evaluates distance to wall hit
 void	side_distance(t_data *data, t_frame *frame)
 {
 	if (frame->ray_dir[X] < 0) {
 		frame->step[X] = -1;
-		frame->side_dst[X] = (data->pos_x - frame->map[X]) * frame->delta_dst[X];
+		frame->side_dst[X] = (data->pos[X] - frame->map[X]) * frame->delta_dst[X];
 	} else {
 		frame->step[X] = 1;
-		frame->side_dst[X] = (frame->map[X] + 1.0 - data->pos_x) * frame->delta_dst[X];
+		frame->side_dst[X] = (frame->map[X] + 1.0 - data->pos[X]) * frame->delta_dst[X];
 	}
 	if (frame->ray_dir[Y] < 0) {
 		frame->step[Y] = -1;
-		frame->side_dst[Y] = (data->pos_y - frame->map[Y]) * frame->delta_dst[Y];
+		frame->side_dst[Y] = (data->pos[Y] - frame->map[Y]) * frame->delta_dst[Y];
 	} else {
 		frame->step[Y] = 1;
-		frame->side_dst[Y] = (frame->map[Y] + 1.0 - data->pos_y) * frame->delta_dst[Y];
+		frame->side_dst[Y] = (frame->map[Y] + 1.0 - data->pos[X]) * frame->delta_dst[Y];
 	}
 }
 
@@ -86,16 +85,15 @@ void	check_hit(t_data *data, t_frame *frame)
 // Sets line height of current wall in view
 void	get_line_height(t_data *data, t_frame *frame)
 {
-	double	perp_wall_dist;
 	double	temp[2];
 
-	temp[X] = (frame->map[X] - data->pos_x + (1 - frame->step[X]) / 2);
-	temp[Y] = (frame->map[Y] - data->pos_y + (1 - frame->step[Y]) / 2);
+	temp[X] = (frame->map[X] - data->pos[X] + (1 - frame->step[X]) / 2);
+	temp[Y] = (frame->map[Y] - data->pos[Y] + (1 - frame->step[Y]) / 2);
 	if (frame->side == 0)
-		perp_wall_dist = temp[X] / frame->ray_dir[X];
+		frame->perp_dst = temp[X] / frame->ray_dir[X];
 	else
-		perp_wall_dist = temp[Y] / frame->ray_dir[Y];
-	frame->line_height = (int)(HEIGHT / perp_wall_dist);
+		frame->perp_dst = temp[Y] / frame->ray_dir[Y];
+	frame->line_height = (int)(HEIGHT / frame->perp_dst);
 }
 
 // Draws full vertical line to data->img
@@ -105,6 +103,22 @@ void	draw_line(t_data *data, t_frame *frame)
 	int draw_end;
 	int	pixel;
 	int	color = 0xFFFF00;
+
+	// calculate value of wallX
+	double wallX;
+	if (frame->side == 0)
+		wallX = data->pos[Y] + frame->perp_dst * frame->ray_dir[Y];
+	else
+		wallX = data->pos[X] + frame->perp_dst * frame->ray_dir[X];
+	wallX -= floor(wallX);
+
+	// x coordinate on the texture
+	int texX;
+	texX = wallX * TEX_WIDTH;
+	if (frame->side == 0 && frame->ray_dir[X] > 0)
+		texX = TEX_WIDTH - texX - 1;
+	if (frame->side == 1 && frame->ray_dir[Y] < 0)
+		texX = TEX_WIDTH - texX - 1;
 
 	draw_start = -frame->line_height / 2 + HEIGHT / 2;
 	draw_end = frame->line_height / 2 + HEIGHT / 2;
@@ -117,8 +131,19 @@ void	draw_line(t_data *data, t_frame *frame)
 	pixel = -1;
 	while (++pixel < draw_start)
 		mlx_pixel_img(frame->x, pixel, data->floor);
-	while (++pixel < draw_end)
+
+	double step = 1.0 * TEX_HEIGHT / frame->line_height;
+	double texPos = (draw_start - HEIGHT / 2 + frame->line_height / 2) * step;
+	int texY;
+	while (++pixel < draw_end) {
+		// mlx_pixel_img(frame->x, pixel, color);
+
+		texY = (int)texPos & (TEX_HEIGHT - 1);
+		texPos += step;
+		color = data->tex[NORTH][TEX_HEIGHT * texY + texX];
 		mlx_pixel_img(frame->x, pixel, color);
+	}
+
 	while (++pixel < HEIGHT)
 		mlx_pixel_img(frame->x, pixel, data->ceiling);
 }
@@ -134,8 +159,8 @@ int	render_frame(void)
 	while (frame->x < WIDTH)
 	{
 		ray_direction(data, frame);
-		frame->map[X] = (int)data->pos_x;
-		frame->map[Y] = (int)data->pos_y;
+		frame->map[X] = (int)data->pos[X];
+		frame->map[Y] = (int)data->pos[Y];
 		ray_length(frame);
 		side_distance(data, frame);
 		check_hit(data, frame);
