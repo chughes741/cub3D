@@ -6,7 +6,7 @@
 /*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:47:02 by minkim            #+#    #+#             */
-/*   Updated: 2023/01/19 17:26:02 by minkim           ###   ########.fr       */
+/*   Updated: 2023/01/20 12:36:34 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,10 @@ int check_space(void)
 	t_data	*data;
 	int		i;
 	int		j;
-	int		flag0;
 	int		flag1;
 
 	data = get_data();
 	i = 0;
-	flag0 = 0;
 	flag1 = 0;
 	while (data->map_file[i])
 	{
@@ -59,15 +57,13 @@ int check_space(void)
 		{
 			if (ft_strchr("\n01 NESW", data->map_file[i][j]) == NULL)
 				 return (1);
-			if (data->map_file[i][j] == '0')
-				flag0++;
 			if (data->map_file[i][j] == '1')
 				flag1++;
 			j++;
 		}
 		i++;
 	}
-	if (flag0 < 1 || flag1 < 10)
+	if (flag1 < 8)
 		return (1);
 	return (0);
 }

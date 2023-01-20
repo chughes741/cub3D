@@ -6,7 +6,7 @@
 /*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 16:50:07 by minkim           ###   ########.fr       */
+/*   Updated: 2023/01/20 12:33:33 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <math.h>
 # include <OpenGL/gl3.h>
-# include "../mlx/mlx.h"
+# include <mlx.h>
 
 # include <stdlib.h>	// malloc, free, exit
 # include <fcntl.h>		// open
