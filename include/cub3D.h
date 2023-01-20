@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 13:04:49 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/20 14:05:20 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,9 @@ typedef struct s_data {
 	int		**map;
 
 	// Camera info
-	double	pos_x;
-	double	pos_y;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
+	double	pos[2];
+	double	dir[2];
+	double	plane[2];
 
 	// Frame info
 	double	time;
@@ -86,6 +83,7 @@ typedef struct s_frame {
 	int		map[2];
 	double	side_dst[2];
 	double	delta_dst[2];
+	double	perp_dst;
 	int		step[2];
 	int		side;
 	bool	hit;
