@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 17:06:15 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/20 12:50:13 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	init_data(int argc, char *argv[])
 	data->tex[EAST] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
 	data->tex[SOUTH] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
 	data->tex[WEST] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
+	load_textures(data);
 	return ;
 }
 

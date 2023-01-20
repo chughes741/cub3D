@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 16:57:06 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/20 12:49:58 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int main(int argc, char **argv)
 	t_data	*d;
 
 	d = get_data();
-	init_data(argc, argv);
 	d->mlx = mlx_init();
-	load_textures(d);
+	init_data(argc, argv);
 	d->win = mlx_new_window(d->mlx, WIDTH, HEIGHT, "cub3D");
 	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);
 	d->addr = mlx_get_data_addr(d->img, &d->bpp, &d->line_size, &d->endian);
