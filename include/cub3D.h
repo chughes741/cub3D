@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 14:35:52 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:10:56 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ char	**array_del_one(char **array, int position);
 char	**free_array(char **array);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*strpop(char *str, int position);
 
 // Data setup and teardown functions
 t_data	*get_data(void);
