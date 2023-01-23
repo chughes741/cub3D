@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 15:12:54 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 13:43:43 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,16 @@
 // Sets frame->ray_dir
 void	ray_direction(t_data *data, t_frame *frame)
 {
-	if (frame->x != 0)
-	{
-		frame->camera_x = 2 * frame->x / (double)WIDTH - 1;
-		frame->ray_dir[X] = data->dir[X] + data->plane[X] * frame->camera_x;
-		frame->ray_dir[Y] = data->dir[Y] + data->plane[Y] * frame->camera_x;
-	}
-	else
-	{
-		frame->camera_x = 0;
-		frame->ray_dir[X] = data->dir[X];
-		frame->ray_dir[Y] = data->dir[Y];
-	} 
+	frame->camera_x = 2 * frame->x / (double)WIDTH - 1;
+	frame->ray_dir[X] = data->dir[X] + data->plane[X] * frame->camera_x;
+	frame->ray_dir[Y] = data->dir[Y] + data->plane[Y] * frame->camera_x;
 }
 
 // Length of ray from one x or y-side to next x or y-side
 void	ray_length(t_frame *frame)
 {
-	if (frame->ray_dir[X] == 0)
-		frame->delta_dst[X] = 0;
-	else
-		frame->delta_dst[X] = fabs(1 / frame->ray_dir[X]);
-	if (frame->ray_dir[Y] == 0)
-		frame->delta_dst[Y] = 0;
-	else
-		frame->delta_dst[Y] = fabs(1 / frame->ray_dir[Y]);
+	frame->delta_dst[X] = fabs(1 / frame->ray_dir[X]);
+	frame->delta_dst[Y] = fabs(1 / frame->ray_dir[Y]);
 }
 
 // Evaluates distance to wall hit
@@ -63,7 +48,7 @@ void	side_distance(t_data *data, t_frame *frame)
 	else
 	{
 		frame->step[Y] = 1;
-		frame->side_dst[Y] = (frame->map[Y] + 1.0 - data->pos[X]) * frame->delta_dst[Y];
+		frame->side_dst[Y] = (frame->map[Y] + 1.0 - data->pos[Y]) * frame->delta_dst[Y];
 	}
 }
 
