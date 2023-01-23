@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:31:06 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 14:21:33 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:13:44 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,8 @@ void	load_texture(t_data *data, int *texture, char *path)
 // Loads N, E, S, W textures into int*
 void	load_textures(t_data *data)
 {
-	load_texture(data, data->tex[NORTH], "assets/textures/north_texture.xpm");
-	load_texture(data, data->tex[EAST], "assets/textures/east_texture.xpm");
-	load_texture(data, data->tex[SOUTH], "assets/textures/south_texture.xpm");
-	load_texture(data, data->tex[WEST], "assets/textures/west_texture.xpm");
-	// load_texture(data, data->tex[NORTH], data->north_path);
-	// load_texture(data, data->tex[EAST], data->east_path);
-	// load_texture(data, data->tex[SOUTH], data->south_path);
-	// load_texture(data, data->tex[WEST], data->west_path);
+	load_texture(data, data->tex[NORTH], data->north_path);
+	load_texture(data, data->tex[EAST], data->east_path);
+	load_texture(data, data->tex[SOUTH], data->south_path);
+	load_texture(data, data->tex[WEST], data->west_path);
 }
