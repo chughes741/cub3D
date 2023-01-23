@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:38 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 14:26:23 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:14:50 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,36 +62,4 @@ void	move_west(t_data **data)
 	if (!d->map[(int)(d->pos[X])][(int)(d->pos[Y] - d->dir[Y] * MOVE_SPEED)])
 		d->pos[Y] += d->dir[X] * MOVE_SPEED;
 	return ;
-}
-
-// Turns the camera left
-void	look_left(t_data **data)
-{
-	t_data	*d;
-	double	old_dir_x;
-	double	old_plane_x;
-
-	d = (*data);
-	old_dir_x = d->dir[X];
-	d->dir[X] = d->dir[X] * cos(ROT_SPEED) - d->dir[Y] * sin(ROT_SPEED);
-	d->dir[Y] = old_dir_x * sin(ROT_SPEED) + d->dir[Y] * cos(ROT_SPEED);
-	old_plane_x = d->plane[X];
-	d->plane[X] = d->plane[X] * cos(ROT_SPEED) - d->plane[Y] * sin(ROT_SPEED);
-	d->plane[Y] = old_plane_x * sin(ROT_SPEED) + d->plane[Y] * cos(ROT_SPEED);
-}
-
-// Turns the camera right
-void	look_right(t_data **data)
-{
-	t_data	*d;
-	double	old_dir_x;
-	double	old_plane_x;
-
-	d = (*data);
-	old_dir_x = d->dir[X];
-	d->dir[X] = d->dir[X] * cos(-ROT_SPEED) - d->dir[Y] * sin(-ROT_SPEED);
-	d->dir[Y] = old_dir_x * sin(-ROT_SPEED) + d->dir[Y] * cos(-ROT_SPEED);
-	old_plane_x = d->plane[X];
-	d->plane[X] = d->plane[X] * cos(-ROT_SPEED) - d->plane[Y] * sin(-ROT_SPEED);
-	d->plane[Y] = old_plane_x * sin(-ROT_SPEED) + d->plane[Y] * cos(-ROT_SPEED);
 }
