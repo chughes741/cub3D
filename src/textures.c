@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:31:06 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 13:08:03 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:21:33 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	load_texture(t_data *data, int *texture, char *path)
 	int		y;
 
 	img.img = mlx_xpm_file_to_image(data->mlx, path, &img.width, &img.height);
-	if (img.img == NULL) 
+	if (img.img == NULL)
 		exit_error("could not load texture");
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_size, &img.endian);
 	y = -1;
@@ -28,7 +28,7 @@ void	load_texture(t_data *data, int *texture, char *path)
 	{
 		x = -1;
 		while (++x < img.width)
-			texture[img.width * y + x] = ((int*)img.addr)[img.width * y + x];
+			texture[img.width * y + x] = ((int *)img.addr)[img.width * y + x];
 	}
 	mlx_destroy_image(data->mlx, img.img);
 }

@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 14:10:28 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:20:55 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	read_map(char *map_name)
 }
 
 // Parses map_file into textures, colours, and int array
-void parse_map(void)
+void	parse_map(void)
 {
 	t_data	*data;
 
@@ -47,7 +47,7 @@ void parse_map(void)
 }
 
 // Removes texture lines from map_file
-void grab_textures(void)
+void	grab_textures(void)
 {
 	t_data	*data;
 	int		i;
@@ -65,19 +65,19 @@ void grab_textures(void)
 		else if (ft_strncmp(data->map_file[i], "SO ", 3) == 0 && data->south_path == NULL)
 		{
 			data->south_path = ft_strdup(data->map_file[i] + 4);
-			data->map_file = array_del_one(data->map_file, i);	
+			data->map_file = array_del_one(data->map_file, i);
 			--i;
 		}
 		else if (ft_strncmp(data->map_file[i], "WE ", 3) == 0 && data->west_path == NULL)
 		{
 			data->west_path = ft_strdup(data->map_file[i] + 4);
-			data->map_file = array_del_one(data->map_file, i);	
+			data->map_file = array_del_one(data->map_file, i);
 			--i;
 		}
 		else if (ft_strncmp(data->map_file[i], "EA ", 3) == 0 && data->east_path == NULL)
 		{
 			data->east_path = ft_strdup(data->map_file[i] + 4);
-			data->map_file = array_del_one(data->map_file, i);	
+			data->map_file = array_del_one(data->map_file, i);
 			--i;
 		}
 		++i;
@@ -85,7 +85,7 @@ void grab_textures(void)
 }
 
 // Removed color lines from map_file
-void grab_colors(void)
+void	grab_colors(void)
 {
 	t_data	*data;
 	int		i;
@@ -112,7 +112,7 @@ void grab_colors(void)
 }
 
 // Sets floor and ceiling colors
-void set_colors(void)
+void	set_colors(void)
 {
 	t_data	*data;
 	char	**floor;
@@ -131,7 +131,7 @@ void set_colors(void)
 }
 
 // Moves map tiles from map_file to map
-void grab_map(void)
+void	grab_map(void)
 {
 	t_data	*data;
 	int		i;
@@ -157,7 +157,7 @@ void grab_map(void)
 }
 
 // Copies values from map_file to map
-void copy_map(void)
+void	copy_map(void)
 {
 	t_data	*data;
 	int		i;
@@ -185,7 +185,7 @@ void copy_map(void)
 }
 
 // Sets player direction and location
-void init_player(char direction, int x, int y)
+void	init_player(char direction, int x, int y)
 {
 	t_data	*data;
 
@@ -203,7 +203,7 @@ void init_player(char direction, int x, int y)
 }
 
 // Gets height and width from map
-void get_size(void)
+void	get_size(void)
 {
 	t_data	*data;
 	int		i;

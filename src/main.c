@@ -6,13 +6,13 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 12:49:58 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:33:21 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	*d;
 

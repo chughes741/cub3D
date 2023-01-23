@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 14:19:40 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:34:49 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 // Data struct with window data
 typedef struct s_data {
-	// MLX
 	void	*mlx;
 	void	*win;
 	char	*addr;
@@ -37,7 +36,6 @@ typedef struct s_data {
 	int		bpp;
 	int		line_size;
 
-	// Map and textures
 	char	**map_file;
 	char	*east_path;
 	char	*west_path;
@@ -53,19 +51,16 @@ typedef struct s_data {
 	int		height;
 	int		**map;
 
-	// Camera info
 	double	pos[2];
 	double	dir[2];
 	double	plane[2];
 
-	// Frame info
 	double	time;
 	double	old_time;
 }			t_data;
 
 // MLX image information
-typedef struct	s_img
-{
+typedef struct s_img {
 	void	*img;
 	void	*addr;
 	int		l_size;

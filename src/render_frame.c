@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 13:43:43 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:23:59 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,20 @@ void	side_distance(t_data *data, t_frame *frame)
 void	check_hit(t_data *data, t_frame *frame)
 {
 	frame->hit = false;
-	while (frame->hit == false) {
+	while (frame->hit == false)
+	{
 		//jump to next map square, OR in x-direction, OR in y-direction
-		if (frame->side_dst[X] < frame->side_dst[Y]) {
+		if (frame->side_dst[X] < frame->side_dst[Y])
+		{
 			frame->side_dst[X] += frame->delta_dst[X];
 			frame->map[X] += frame->step[X];
 			if (frame->step[X] > 0)
 				frame->side = NORTH;
 			else
 				frame->side = SOUTH;
-		} else {
+		}
+		else
+		{
 			frame->side_dst[Y] += frame->delta_dst[Y];
 			frame->map[Y] += frame->step[Y];
 			if (frame->step[Y] > 0)
@@ -100,7 +104,7 @@ void	wall_texture_x(t_data *data, t_frame *frame)
 		frame->wall_x = data->pos[Y] + frame->perp_dst * frame->ray_dir[Y];
 	if (frame->side == EAST || frame->side == WEST)
 		frame->wall_x = data->pos[X] + frame->perp_dst * frame->ray_dir[X];
-	frame->wall_x -= floor(frame->wall_x);	
+	frame->wall_x -= floor(frame->wall_x);
 }
 
 // Gets line height of texture to draw
@@ -108,9 +112,9 @@ void	draw_length(t_frame *frame)
 {
 	frame->draw_start = -frame->line_height / 2 + HEIGHT / 2;
 	frame->draw_end = frame->line_height / 2 + HEIGHT / 2;
-	if(frame->draw_start < 0)
+	if (frame->draw_start < 0)
 		frame->draw_start = 0;
-	if(frame->draw_end >= HEIGHT)
+	if (frame->draw_end >= HEIGHT)
 		frame->draw_end = HEIGHT - 1;
 }
 
@@ -118,10 +122,10 @@ void	draw_length(t_frame *frame)
 void	draw_line(t_data *data, t_frame *frame)
 {
 	int		pixel;
-	int		color = 0xFFFF00;
-	int 	tex[2];
-	double	tex_step; 
-	double	texPos;
+	int		color;
+	int		tex[2];
+	double	tex_step;
+	double	tex_pos;
 
 	wall_texture_x(data, frame);
 	// x coordinate on the texture
@@ -131,17 +135,15 @@ void	draw_line(t_data *data, t_frame *frame)
 	if ((frame->side == EAST || frame->side == WEST) && frame->ray_dir[Y] < 0)
 		tex[X] = TEX_WIDTH - tex[X] - 1;
 	draw_length(frame);
-
 	pixel = -1;
 	while (++pixel < frame->draw_start)
 		mlx_pixel_img(frame->x, pixel, data->floor);
-
 	tex_step = 1.0 * TEX_HEIGHT / frame->line_height;
-	texPos = (frame->draw_start - HEIGHT / 2 + frame->line_height / 2) * tex_step;
+	tex_pos = (frame->draw_start - HEIGHT / 2 + frame->line_height / 2) * tex_step;
 	while (++pixel < frame->draw_end)
 	{
-		tex[Y] = (int)texPos & (TEX_HEIGHT - 1);
-		texPos += tex_step;
+		tex[Y] = (int)tex_pos & (TEX_HEIGHT - 1);
+		tex_pos += tex_step;
 		color = data->tex[frame->side][TEX_HEIGHT * tex[Y] + tex[X]];
 		mlx_pixel_img(frame->x, pixel, color);
 	}
