@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 14:33:36 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 16:04:32 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,31 @@ void	init_data(int argc, char *argv[])
 	return ;
 }
 
-// Frees data and its contents
-void	del_data(void)
+// Frees maps
+static void	free_map(void)
+{
+	t_data	*data;
+	int		i;
+
+	data = get_data();
+	i = -1;
+	if (data->map)
+	{
+		while (data->map[++i])
+			data->map[i] = xfree(data->map[i]);
+		data->map = xfree(data->map);
+	}
+	i = -1;
+	if (data->map_file)
+	{
+		while (data->map_file[++i])
+			data->map_file[i] = xfree(data->map_file[i]);
+		data->map_file = xfree(data->map_file);
+	}
+}
+
+// Frees textures
+static void	free_textures(void)
 {
 	t_data	*data;
 
@@ -60,6 +83,28 @@ void	del_data(void)
 			data->tex[WEST] = xfree(data->tex[WEST]);
 		data->tex = xfree(data->tex);
 	}
+	if (data->tex_path[NORTH])
+		data->tex_path[NORTH] = xfree(data->tex_path[NORTH]);
+	if (data->tex_path[EAST])
+		data->tex_path[EAST] = xfree(data->tex_path[EAST]);
+	if (data->tex_path[SOUTH])
+		data->tex_path[SOUTH] = xfree(data->tex_path[SOUTH]);
+	if (data->tex_path[WEST])
+		data->tex_path[WEST] = xfree(data->tex_path[WEST]);
+}
+
+// Frees data and its contents
+void	del_data(void)
+{
+	t_data	*data;
+
+	data = get_data();
+	free_map();
+	free_textures();
+	if (data->floor_name)
+		data->floor_name = xfree(data->floor_name);
+	if (data->ceiling_name)
+		data->ceiling_name = xfree(data->ceiling_name);
 	data = xfree(data);
 	return ;
 }
