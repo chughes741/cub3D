@@ -6,80 +6,11 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 14:37:24 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:23:01 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-// Sets frame->ray_dir
-void	ray_direction(t_data *data, t_frame *frame)
-{
-	frame->camera_x = 2 * frame->x / (double)WIDTH - 1;
-	frame->ray_dir[X] = data->dir[X] + data->plane[X] * frame->camera_x;
-	frame->ray_dir[Y] = data->dir[Y] + data->plane[Y] * frame->camera_x;
-}
-
-// Length of ray from one x or y-side to next x or y-side
-void	ray_length(t_frame *frame)
-{
-	frame->delta_dst[X] = fabs(1 / frame->ray_dir[X]);
-	frame->delta_dst[Y] = fabs(1 / frame->ray_dir[Y]);
-}
-
-// Evaluates distance to wall hit
-void	side_distance(t_data *data, t_frame *frame)
-{
-	if (frame->ray_dir[X] < 0)
-	{
-		frame->step[X] = -1;
-		frame->side_dst[X] = (data->pos[X] - frame->map[X]) * frame->delta_dst[X];
-	}
-	else
-	{
-		frame->step[X] = 1;
-		frame->side_dst[X] = (frame->map[X] + 1.0 - data->pos[X]) * frame->delta_dst[X];
-	}
-	if (frame->ray_dir[Y] < 0)
-	{
-		frame->step[Y] = -1;
-		frame->side_dst[Y] = (data->pos[Y] - frame->map[Y]) * frame->delta_dst[Y];
-	}
-	else
-	{
-		frame->step[Y] = 1;
-		frame->side_dst[Y] = (frame->map[Y] + 1.0 - data->pos[Y]) * frame->delta_dst[Y];
-	}
-}
-
-// Extends ray until it finds a wall
-void	check_hit(t_data *data, t_frame *frame)
-{
-	frame->hit = false;
-	while (frame->hit == false)
-	{
-		if (frame->side_dst[X] < frame->side_dst[Y])
-		{
-			frame->side_dst[X] += frame->delta_dst[X];
-			frame->map[X] += frame->step[X];
-			if (frame->step[X] > 0)
-				frame->side = NORTH;
-			else
-				frame->side = SOUTH;
-		}
-		else
-		{
-			frame->side_dst[Y] += frame->delta_dst[Y];
-			frame->map[Y] += frame->step[Y];
-			if (frame->step[Y] > 0)
-				frame->side = EAST;
-			else
-				frame->side = WEST;
-		}
-		if (data->map[frame->map[X]][frame->map[Y]] > 0)
-			frame->hit = true;
-	}
-}
 
 // Sets line height of current wall in view
 void	get_line_height(t_data *data, t_frame *frame)
@@ -117,35 +48,33 @@ void	draw_length(t_frame *frame)
 }
 
 // Draws full vertical line to data->img
-void	draw_line(t_data *data, t_frame *frame)
+void	draw_line(t_data *data, t_frame *f)
 {
 	int		pixel;
 	int		color;
-	int		tex[2];
 	double	tex_step;
 	double	tex_pos;
 
-	wall_texture_x(data, frame);
-	tex[X] = frame->wall_x * TEX_WIDTH;
-	if ((frame->side == NORTH || frame->side == SOUTH) && frame->ray_dir[X] > 0)
-		tex[X] = TEX_WIDTH - tex[X] - 1;
-	if ((frame->side == EAST || frame->side == WEST) && frame->ray_dir[Y] < 0)
-		tex[X] = TEX_WIDTH - tex[X] - 1;
-	draw_length(frame);
+	wall_texture_x(data, f);
+	f->tex[X] = f->wall_x * TEX_WIDTH;
+	if (((f->side == NORTH || f->side == SOUTH) && f->ray_dir[X] > 0)
+		|| ((f->side == EAST || f->side == WEST) && f->ray_dir[Y] < 0))
+		f->tex[X] = TEX_WIDTH - f->tex[X] - 1;
+	draw_length(f);
 	pixel = -1;
-	while (++pixel < frame->draw_start)
-		mlx_pixel_img(frame->x, pixel, data->floor);
-	tex_step = 1.0 * TEX_HEIGHT / frame->line_height;
-	tex_pos = (frame->draw_start - HEIGHT / 2 + frame->line_height / 2) * tex_step;
-	while (++pixel < frame->draw_end)
+	while (++pixel < f->draw_start)
+		mlx_pixel_img(f->x, pixel, data->floor);
+	tex_step = 1.0 * TEX_HEIGHT / f->line_height;
+	tex_pos = (f->draw_start - HEIGHT / 2 + f->line_height / 2) * tex_step;
+	while (++pixel < f->draw_end)
 	{
-		tex[Y] = (int)tex_pos & (TEX_HEIGHT - 1);
+		f->tex[Y] = (int)tex_pos & (TEX_HEIGHT - 1);
 		tex_pos += tex_step;
-		color = data->tex[frame->side][TEX_HEIGHT * tex[Y] + tex[X]];
-		mlx_pixel_img(frame->x, pixel, color);
+		color = data->tex[f->side][TEX_HEIGHT * f->tex[Y] + f->tex[X]];
+		mlx_pixel_img(f->x, pixel, color);
 	}
 	while (++pixel < HEIGHT)
-		mlx_pixel_img(frame->x, pixel, data->ceiling);
+		mlx_pixel_img(f->x, pixel, data->ceiling);
 }
 
 // Renders next frame from map to window

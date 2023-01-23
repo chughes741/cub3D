@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:10:56 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:17:32 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_frame {
 	double	wall_x;
 	double	draw_start;
 	double	draw_end;
+	int		tex[2];
 }			t_frame;
 
 // Libft functions
