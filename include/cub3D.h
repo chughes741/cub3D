@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:17:32 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:24:10 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,11 @@ void	move_south(t_data **data);
 void	move_east(t_data **data);
 void	look_left(t_data **data);
 void	look_right(t_data **data);
+
+// Render utils
+void	ray_direction(t_data *data, t_frame *frame);
+void	ray_length(t_frame *frame);
+void	side_distance(t_data *d, t_frame *f);
+void	check_hit(t_data *data, t_frame *frame);
 
 #endif // CUB3D_H
