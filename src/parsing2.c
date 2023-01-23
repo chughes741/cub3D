@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:29:23 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:29:46 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:49:25 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,31 +56,27 @@ void	grab_textures(void)
 	i = 0;
 	while (d->map_file[i])
 	{
-		if (ft_strncmp(d->map_file[i], "NO ", 3) == 0
-			&& d->north_path == NULL)
+		if (ft_strncmp(d->map_file[i], "NO ", 3) == 0)
 		{
-			d->north_path = strpop(ft_strdup(d->map_file[i] + 3), -1);
+			d->tex_path[NORTH] = strpop(ft_strdup(d->map_file[i] + 3), -1);
 			d->map_file = array_del_one(d->map_file, i);
 			--i;
 		}
-		else if (ft_strncmp(d->map_file[i], "SO ", 3) == 0
-			&& d->south_path == NULL)
+		else if (ft_strncmp(d->map_file[i], "SO ", 3) == 0)
 		{
-			d->south_path = strpop(ft_strdup(d->map_file[i] + 3), -1);
+			d->tex_path[SOUTH] = strpop(ft_strdup(d->map_file[i] + 3), -1);
 			d->map_file = array_del_one(d->map_file, i);
 			--i;
 		}
-		else if (ft_strncmp(d->map_file[i], "WE ", 3) == 0
-			&& d->west_path == NULL)
+		else if (ft_strncmp(d->map_file[i], "WE ", 3) == 0)
 		{
-			d->west_path = strpop(ft_strdup(d->map_file[i] + 3), -1);
+			d->tex_path[WEST] = strpop(ft_strdup(d->map_file[i] + 3), -1);
 			d->map_file = array_del_one(d->map_file, i);
 			--i;
 		}
-		else if (ft_strncmp(d->map_file[i], "EA ", 3) == 0
-			&& d->east_path == NULL)
+		else if (ft_strncmp(d->map_file[i], "EA ", 3) == 0)
 		{
-			d->east_path = strpop(ft_strdup(d->map_file[i] + 3), -1);
+			d->tex_path[EAST] = strpop(ft_strdup(d->map_file[i] + 3), -1);
 			d->map_file = array_del_one(d->map_file, i);
 			--i;
 		}

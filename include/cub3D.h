@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:38:47 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:48:39 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ typedef struct s_data {
 	int		line_size;
 
 	char	**map_file;
-	char	*east_path;
-	char	*west_path;
-	char	*north_path;
-	char	*south_path;
+	char	*tex_path[4];
 	char	*floor_name;
 	char	*ceiling_name;
 
