@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:24:10 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:36:23 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ void	get_size(void);
 void	set_colors(void);
 void	exit_error(char *message);
 void	check_map(void);
+int		check_last_row(void);
+int		check_closed_first_zero(void);
+int		flood_fill_first_zero(int x, int y);
 
 // MLX interop functions
 void	close_window(t_data **data);

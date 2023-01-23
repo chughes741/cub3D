@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:47:02 by minkim            #+#    #+#             */
-/*   Updated: 2023/01/23 14:36:49 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:34:40 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	check_space(void)
 	return (0);
 }
 
+//
 int	flood_fill_player(int x, int y)
 {
 	t_data	*data;
@@ -102,7 +103,8 @@ int	flood_fill_first_zero(int x, int y)
 	t_data	*data;
 
 	data = get_data();
-	if (x >= data->height || data->map_file[x][y] == '\n' || data->map_file[x][y] == ' ')
+	if (x >= data->height || data->map_file[x][y] == '\n'
+		|| data->map_file[x][y] == ' ')
 		exit_error("invalid map ");
 	if (data->map_file[x][y] == '0')
 	{
@@ -111,102 +113,6 @@ int	flood_fill_first_zero(int x, int y)
 		flood_fill_first_zero(x, y + 1);
 		flood_fill_first_zero(x - 1, y);
 		flood_fill_first_zero(x, y - 1);
-	}
-	return (0);
-}
-
-//
-int	check_surround_first_zero(int i, int j)
-{
-	t_data	*data;
-
-	data = get_data();
-	if (i < 1 || j < 1)
-		exit_error("invalid map ");
-	if (data->map_file[i][j - 1] == ' ')
-		exit_error("invalid map ");
-	if (data->map_file[i - 1][j - 1] == '1' && \
-		data->map_file[i - 1][j] == '1' && data->map_file[i][j - 1] == '1')
-		return (0);
-	else
-		exit_error("invalid map ");
-	return (1);
-}
-
-//
-int	check_closed_first_zero(void)
-{
-	t_data	*data;
-	int		i;
-	int		j;
-
-	data = get_data();
-	i = 0;
-	while (data->map_file[i])
-	{
-		j = 0;
-		while (data->map_file[i][j])
-		{
-			if (data->map_file[i][j] == '0')
-			{
-				if (check_surround_first_zero(i, j))
-					return (0);
-				return (flood_fill_first_zero(i, j));
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-//
-void	check_surround_last_row(int i, int j)
-{
-	t_data	*data;
-
-	data = get_data();
-	if (data->map_file[i - 1][j] != '1' || data->map_file[i][j + 1] != '1')
-		exit_error("invalid map ");
-}
-
-//
-int	check_surround_last_one(int i, int j)
-{
-	t_data	*data;
-
-	data = get_data();
-	if (data->map_file[i - 1][j] != '1' || data->map_file[i][j - 1] != '1')
-		exit_error("invalid map ");
-	return (0);
-}
-
-//
-int	check_last_row(void)
-{
-	t_data	*data;
-	int		i;
-	int		flag;
-
-	data = get_data();
-	flag = 0;
-	i = 0;
-	while (data->map_file[data->height - 1][i])
-	{
-		if (ft_strchr("1 \n", data->map_file[data->height - 1][i]) == NULL)
-			exit_error("invalid map ");
-		if (flag == 0 && data->map_file[data->height - 1][i] == '1')
-		{
-			check_surround_last_row(data->height - 1, i);
-			flag = 1;
-		}
-		i++;
-	}
-	while (data->map_file[data->height - 1][--i])
-	{
-		if (data->map_file[data->height - 2][i]
-		&& data->map_file[data->height - 2][i] != '\n' && data->map_file[data->height - 1][i] == '1')
-			return (check_surround_last_one(data->height - 1, i));
 	}
 	return (0);
 }
