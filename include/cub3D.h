@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:48:39 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:51:51 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	check_input(int argc, char *path);
 void	read_map(char *map_name);
 void	parse_map(void);
 void	grab_textures(void);
+void	set_texture(int *i, int side);
 void	grab_colors(void);
 void	grab_map(void);
 void	copy_map(void);
