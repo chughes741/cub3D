@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 14:07:11 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 13:57:25 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,18 @@ void	del_data(void)
 	t_data	*data;
 
 	data = get_data();
+	if (data->tex)
+	{
+		if (data->tex[NORTH])
+			data->tex[NORTH] = xfree(data->tex[NORTH]);
+		if (data->tex[EAST])
+			data->tex[EAST] = xfree(data->tex[EAST]);
+		if (data->tex[SOUTH])
+			data->tex[SOUTH] = xfree(data->tex[SOUTH]);
+		if (data->tex[WEST])
+			data->tex[WEST] = xfree(data->tex[WEST]);
+		data->tex = xfree(data->tex);
+	}
 	data = xfree(data);
 	return ;
 }
