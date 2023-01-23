@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:36:23 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:38:47 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,9 @@ void	check_map(void);
 int		check_last_row(void);
 int		check_closed_first_zero(void);
 int		flood_fill_first_zero(int x, int y);
+int		check_closed_player(void);
+int		check_space(void);
+int		check_player(void);
 
 // MLX interop functions
 void	close_window(t_data **data);
