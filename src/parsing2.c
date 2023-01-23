@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:29:23 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:53:01 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 16:11:43 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,6 @@ void	set_colors(void)
 	i = -1;
 	while (ceiling[++i])
 		data->ceiling |= ft_atoi(ceiling[i]) << (24 - i * 8);
+	floor = free_array(floor);
+	ceiling = free_array(ceiling);
 }
