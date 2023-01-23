@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:29:23 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 16:11:43 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 16:42:02 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ void	grab_colors(void)
 		if (ft_strncmp(data->map_file[i], "F ", 2) == 0
 			&& data->floor_name == NULL)
 		{
-			data->floor_name = ft_strdup(data->map_file[i] + 3);
+			data->floor_name = strpop(ft_strdup(data->map_file[i] + 2), -1);
 			data->map_file = array_del_one(data->map_file, i);
 			--i;
 		}
 		if (ft_strncmp(data->map_file[i], "C ", 2) == 0
 			&& data->ceiling_name == NULL)
 		{
-			data->ceiling_name = ft_strdup(data->map_file[i] + 3);
+			data->ceiling_name = strpop(ft_strdup(data->map_file[i] + 2), -1);
 			data->map_file = array_del_one(data->map_file, i);
 			--i;
 		}
@@ -103,17 +103,14 @@ void	set_colors(void)
 	t_data	*data;
 	char	**floor;
 	char	**ceiling;
-	int		i;
 
 	data = get_data();
 	floor = ft_split(data->floor_name, ',');
 	ceiling = ft_split(data->ceiling_name, ',');
-	i = -1;
-	while (floor[++i])
-		data->floor |= ft_atoi(floor[i]) << (24 - i * 8);
-	i = -1;
-	while (ceiling[++i])
-		data->ceiling |= ft_atoi(ceiling[i]) << (24 - i * 8);
+	data->floor = ft_atoi(floor[0]) << 16 | ft_atoi(floor[1]) << 8 \
+	| ft_atoi(floor[2]);
+	data->ceiling = ft_atoi(ceiling[0]) << 16 | ft_atoi(ceiling[1]) << 8 \
+	| ft_atoi(ceiling[2]);
 	floor = free_array(floor);
 	ceiling = free_array(ceiling);
 }

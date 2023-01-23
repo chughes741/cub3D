@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:23:01 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 16:30:25 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	draw_line(t_data *data, t_frame *f)
 	draw_length(f);
 	pixel = -1;
 	while (++pixel < f->draw_start)
-		mlx_pixel_img(f->x, pixel, data->floor);
+		mlx_pixel_img(f->x, pixel, data->ceiling);
 	tex_step = 1.0 * TEX_HEIGHT / f->line_height;
 	tex_pos = (f->draw_start - HEIGHT / 2 + f->line_height / 2) * tex_step;
 	while (++pixel < f->draw_end)
@@ -74,7 +74,7 @@ void	draw_line(t_data *data, t_frame *f)
 		mlx_pixel_img(f->x, pixel, color);
 	}
 	while (++pixel < HEIGHT)
-		mlx_pixel_img(f->x, pixel, data->ceiling);
+		mlx_pixel_img(f->x, pixel, data->floor);
 }
 
 // Renders next frame from map to window
