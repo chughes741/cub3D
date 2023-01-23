@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:10:27 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:10:42 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:12:59 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*strpop(char *str, int position)
 
 	if (!str)
 		return (NULL);
-	new_str = (char *)ft_calloc(ft_strlen(str), sizeof(char));
+	new_str = (char *)xalloc(ft_strlen(str), sizeof(char));
 	if (position < 0)
 		position += ft_strlen(str);
 	i = 0;
