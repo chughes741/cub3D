@@ -6,129 +6,11 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:12:44 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:29:39 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-// Reads map file into an array of strings
-void	read_map(char *map_name)
-{
-	t_data	*d;
-	char	*line;
-	int		map_fd;
-
-	d = get_data();
-	map_fd = open(map_name, O_RDONLY);
-	if (map_fd == -1)
-		exit_error("could not open map file ");
-	line = gnl(map_fd);
-	while (line)
-	{
-		d->map_file = array_realloc(d->map_file, arraylen(d->map_file) + 1);
-		d->map_file[arraylen(d->map_file)] = line;
-		line = gnl(map_fd);
-	}
-	close(map_fd);
-	return ;
-}
-
-// Parses map_file into textures, colours, and int array
-void	parse_map(void)
-{
-	t_data	*data;
-
-	data = get_data();
-	grab_textures();
-	grab_colors();
-	grab_map();
-	return ;
-}
-
-// Removes texture lines from map_file
-void	grab_textures(void)
-{
-	t_data	*data;
-	int		i;
-
-	data = get_data();
-	i = 0;
-	while (data->map_file[i])
-	{
-		if (ft_strncmp(data->map_file[i], "NO ", 3) == 0 && data->north_path == NULL)
-		{
-			data->north_path = strpop(ft_strdup(data->map_file[i] + 3), -1);
-			data->map_file = array_del_one(data->map_file, i);
-			--i;
-		}
-		else if (ft_strncmp(data->map_file[i], "SO ", 3) == 0 && data->south_path == NULL)
-		{
-			data->south_path = strpop(ft_strdup(data->map_file[i] + 3), -1);
-			data->map_file = array_del_one(data->map_file, i);
-			--i;
-		}
-		else if (ft_strncmp(data->map_file[i], "WE ", 3) == 0 && data->west_path == NULL)
-		{
-			data->west_path = strpop(ft_strdup(data->map_file[i] + 3), -1);
-			data->map_file = array_del_one(data->map_file, i);
-			--i;
-		}
-		else if (ft_strncmp(data->map_file[i], "EA ", 3) == 0 && data->east_path == NULL)
-		{
-			data->east_path = strpop(ft_strdup(data->map_file[i] + 3), -1);
-			data->map_file = array_del_one(data->map_file, i);
-			--i;
-		}
-		++i;
-	}
-}
-
-// Removed color lines from map_file
-void	grab_colors(void)
-{
-	t_data	*data;
-	int		i;
-
-	data = get_data();
-	i = 0;
-	while (data->map_file[i])
-	{
-		if (ft_strncmp(data->map_file[i], "F ", 2) == 0 && data->floor_name == NULL)
-		{
-			data->floor_name = ft_strdup(data->map_file[i] + 3);
-			data->map_file = array_del_one(data->map_file, i);
-			--i;
-		}
-		if (ft_strncmp(data->map_file[i], "C ", 2) == 0 && data->ceiling_name == NULL)
-		{
-			data->ceiling_name = ft_strdup(data->map_file[i] + 3);
-			data->map_file = array_del_one(data->map_file, i);
-			--i;
-		}
-		++i;
-	}
-	set_colors();
-}
-
-// Sets floor and ceiling colors
-void	set_colors(void)
-{
-	t_data	*data;
-	char	**floor;
-	char	**ceiling;
-	int		i;
-
-	data = get_data();
-	floor = ft_split(data->floor_name, ',');
-	ceiling = ft_split(data->ceiling_name, ',');
-	i = -1;
-	while (floor[++i])
-		data->floor |= ft_atoi(floor[i]) << (24 - i * 8);
-	i = -1;
-	while (ceiling[++i])
-		data->ceiling |= ft_atoi(ceiling[i]) << (24 - i * 8);
-}
 
 // Moves map tiles from map_file to map
 void	grab_map(void)
@@ -170,7 +52,8 @@ void	copy_map(void)
 		j = 0;
 		while (j < data->width)
 		{
-			if (j >= ft_linelen(data->map_file[i]) || data->map_file[i][j] == ' ')
+			if (j >= ft_linelen(data->map_file[i])
+				|| data->map_file[i][j] == ' ')
 				data->map[i][j] = SPACE;
 			else if (data->map_file[i][j] == '0')
 				data->map[i][j] = EMPTY;
@@ -221,14 +104,14 @@ void	get_size(void)
 }
 
 // Checks input and sets map_file height
-void	check_input(int argc, char *path)
+void	check_input(int argc, char *p)
 {
 	t_data	*data;
 
 	data = get_data();
 	if (argc != 2)
 		exit_error("no map path given ");
-	if (ft_strlen(path) >= 4 && ft_strncmp(&path[ft_strlen(path) - 4], ".cub", 4))
+	if (ft_strlen(p) >= 4 && ft_strncmp(&p[ft_strlen(p) - 4], ".cub", 4))
 		exit_error("map does not have correct file suffix ");
 	return ;
 }
