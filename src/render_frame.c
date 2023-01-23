@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:55 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 14:23:59 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:37:24 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	check_hit(t_data *data, t_frame *frame)
 	frame->hit = false;
 	while (frame->hit == false)
 	{
-		//jump to next map square, OR in x-direction, OR in y-direction
 		if (frame->side_dst[X] < frame->side_dst[Y])
 		{
 			frame->side_dst[X] += frame->delta_dst[X];
@@ -77,7 +76,6 @@ void	check_hit(t_data *data, t_frame *frame)
 			else
 				frame->side = WEST;
 		}
-		//Check if ray has hit a wall
 		if (data->map[frame->map[X]][frame->map[Y]] > 0)
 			frame->hit = true;
 	}
@@ -128,7 +126,6 @@ void	draw_line(t_data *data, t_frame *frame)
 	double	tex_pos;
 
 	wall_texture_x(data, frame);
-	// x coordinate on the texture
 	tex[X] = frame->wall_x * TEX_WIDTH;
 	if ((frame->side == NORTH || frame->side == SOUTH) && frame->ray_dir[X] > 0)
 		tex[X] = TEX_WIDTH - tex[X] - 1;

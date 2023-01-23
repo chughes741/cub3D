@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:47:02 by minkim            #+#    #+#             */
-/*   Updated: 2023/01/23 14:33:01 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:36:49 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	check_closed_player(void)
 
 	data = get_data();
 	data->map_file[(int)data->pos[X]][(int)data->pos[Y]] = '0';
-	return flood_fill_player(data->pos[X], data->pos[Y]);
+	return (flood_fill_player(data->pos[X], data->pos[Y]));
 }
 
 //

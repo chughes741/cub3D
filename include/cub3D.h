@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 14:34:49 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:35:52 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ typedef struct s_data {
 	double	pos[2];
 	double	dir[2];
 	double	plane[2];
-
-	double	time;
-	double	old_time;
 }			t_data;
 
 // MLX image information
