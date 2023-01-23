@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:29:23 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:49:25 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:53:01 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,13 @@ void	grab_textures(void)
 	while (d->map_file[i])
 	{
 		if (ft_strncmp(d->map_file[i], "NO ", 3) == 0)
-		{
-			d->tex_path[NORTH] = strpop(ft_strdup(d->map_file[i] + 3), -1);
-			d->map_file = array_del_one(d->map_file, i);
-			--i;
-		}
+			set_texture(&i, NORTH);
 		else if (ft_strncmp(d->map_file[i], "SO ", 3) == 0)
-		{
-			d->tex_path[SOUTH] = strpop(ft_strdup(d->map_file[i] + 3), -1);
-			d->map_file = array_del_one(d->map_file, i);
-			--i;
-		}
+			set_texture(&i, SOUTH);
 		else if (ft_strncmp(d->map_file[i], "WE ", 3) == 0)
-		{
-			d->tex_path[WEST] = strpop(ft_strdup(d->map_file[i] + 3), -1);
-			d->map_file = array_del_one(d->map_file, i);
-			--i;
-		}
+			set_texture(&i, WEST);
 		else if (ft_strncmp(d->map_file[i], "EA ", 3) == 0)
-		{
-			d->tex_path[EAST] = strpop(ft_strdup(d->map_file[i] + 3), -1);
-			d->map_file = array_del_one(d->map_file, i);
-			--i;
-		}
+			set_texture(&i, EAST);
 		++i;
 	}
 }
