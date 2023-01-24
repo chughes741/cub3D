@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:22:28 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:23:04 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/24 12:20:02 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	check_hit(t_data *data, t_frame *frame)
 			frame->side_dst[Y] += frame->delta_dst[Y];
 			frame->map[Y] += frame->step[Y];
 			if (frame->step[Y] > 0)
-				frame->side = EAST;
-			else
 				frame->side = WEST;
+			else
+				frame->side = EAST;
 		}
 		if (data->map[frame->map[X]][frame->map[Y]] > 0)
 			frame->hit = true;
