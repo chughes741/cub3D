@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 16:04:32 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/24 11:54:21 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	init_data(int argc, char *argv[])
 	read_map(argv[1]);
 	parse_map();
 	check_map();
-	data->plane[Y] = 0.66;
 	data->tex = xalloc(4, sizeof(int **));
 	data->tex[NORTH] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
 	data->tex[EAST] = xalloc(TEX_HEIGHT * TEX_WIDTH, sizeof(int));
