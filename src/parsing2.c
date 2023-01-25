@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:29:23 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/25 15:44:06 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/25 15:48:50 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	grab_textures(void)
 
 	d = get_data();
 	i = 0;
-	while (d->map_file[i])
+	while (d->map_file && d->map_file[i])
 	{
 		if (ft_strncmp(d->map_file[i], "NO ", 3) == 0)
 			set_texture(&i, NORTH);
