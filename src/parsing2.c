@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:29:23 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/25 15:41:27 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/25 15:44:06 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ void	grab_textures(void)
 			set_texture(&i, EAST);
 		++i;
 	}
+	if (!d->tex_path[NORTH] || !d->tex_path[EAST] || !d->tex_path[SOUTH]
+		|| !d->tex_path[WEST])
+		exit_error("Error with map file: ");
 }
 
 // Removed color lines from map_file
