@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/30 12:31:42 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/30 16:40:06 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ int	main(int argc, char **argv)
 
 	d = get_data();
 	init_data(argc, argv);
+
+	// for (int i = 0; i < d->height; i++)
+	// {
+	// 	printf("%s", d->map_file[i]);
+	// }
+
 	d->win = mlx_new_window(d->mlx, WIDTH, HEIGHT, "cub3D");
 	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);
 	d->addr = mlx_get_data_addr(d->img, &d->bpp, &d->line_size, &d->endian);
