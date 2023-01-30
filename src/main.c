@@ -6,18 +6,17 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:43 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 12:49:58 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/30 12:31:42 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	*d;
 
 	d = get_data();
-	d->mlx = mlx_init();
 	init_data(argc, argv);
 	d->win = mlx_new_window(d->mlx, WIDTH, HEIGHT, "cub3D");
 	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);

@@ -6,10 +6,9 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:17:58 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 16:52:07 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:34:58 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef CUB3D_DEFINES_H
 # define CUB3D_DEFINES_H

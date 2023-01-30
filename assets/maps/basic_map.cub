@@ -1,10 +1,10 @@
-NO ./assets/textures/north_texture
-SO ./assets/textures/south_texture
-WE ./assets/textures/west_texture
-EA ./assets/textures/east_texture
+NO ./assets/textures/north_texture.xpm
+EA ./assets/textures/east_texture.xpm
+SO ./assets/textures/south_texture.xpm
+WE ./assets/textures/west_texture.xpm
 
-F 220,100,0
-C 225,30,0
+C 100,185,255
+F 60,35,10
 
         1111111111111111111111111
         1000000000110000000000001

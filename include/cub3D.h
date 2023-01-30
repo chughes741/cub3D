@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/20 14:05:20 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/30 12:47:19 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 // Data struct with window data
 typedef struct s_data {
-	// MLX
 	void	*mlx;
 	void	*win;
 	char	*addr;
@@ -37,12 +36,8 @@ typedef struct s_data {
 	int		bpp;
 	int		line_size;
 
-	// Map and textures
 	char	**map_file;
-	char	*east_path;
-	char	*west_path;
-	char	*north_path;
-	char	*south_path;
+	char	*tex_path[4];
 	char	*floor_name;
 	char	*ceiling_name;
 
@@ -53,19 +48,13 @@ typedef struct s_data {
 	int		height;
 	int		**map;
 
-	// Camera info
 	double	pos[2];
 	double	dir[2];
 	double	plane[2];
-
-	// Frame info
-	double	time;
-	double	old_time;
 }			t_data;
 
 // MLX image information
-typedef struct	s_img
-{
+typedef struct s_img {
 	void	*img;
 	void	*addr;
 	int		l_size;
@@ -88,6 +77,10 @@ typedef struct s_frame {
 	int		side;
 	bool	hit;
 	int		line_height;
+	double	wall_x;
+	double	draw_start;
+	double	draw_end;
+	int		tex[2];
 }			t_frame;
 
 // Libft functions
@@ -110,6 +103,7 @@ char	**array_del_one(char **array, int position);
 char	**free_array(char **array);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*strpop(char *str, int position);
 
 // Data setup and teardown functions
 t_data	*get_data(void);
@@ -121,6 +115,7 @@ void	check_input(int argc, char *path);
 void	read_map(char *map_name);
 void	parse_map(void);
 void	grab_textures(void);
+void	set_texture(int *i, int side);
 void	grab_colors(void);
 void	grab_map(void);
 void	copy_map(void);
@@ -129,6 +124,13 @@ void	get_size(void);
 void	set_colors(void);
 void	exit_error(char *message);
 void	check_map(void);
+int		check_last_row(void);
+int		check_closed_first_zero(void);
+int		flood_fill_first_zero(int x, int y);
+int		check_closed_player(void);
+int		check_space(void);
+int		check_player(void);
+void	check_numbers(char **floor, char **ceiling);
 
 // MLX interop functions
 void	close_window(t_data **data);
@@ -146,5 +148,11 @@ void	move_south(t_data **data);
 void	move_east(t_data **data);
 void	look_left(t_data **data);
 void	look_right(t_data **data);
+
+// Render utils
+void	ray_direction(t_data *data, t_frame *frame);
+void	ray_length(t_frame *frame);
+void	side_distance(t_data *d, t_frame *f);
+void	check_hit(t_data *data, t_frame *frame);
 
 #endif // CUB3D_H

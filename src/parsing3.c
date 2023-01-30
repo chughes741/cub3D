@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_error.c                                       :+:      :+:    :+:   */
+/*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 16:29:27 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/30 12:24:29 by chughes          ###   ########.fr       */
+/*   Created: 2023/01/23 15:39:41 by chughes           #+#    #+#             */
+/*   Updated: 2023/01/30 14:33:31 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-// Called to exit program and display error
-void	exit_error(char *message)
+// Just here for norm
+void	set_texture(int *i, int side)
 {
 	t_data	*data;
-	char	*msg;
+	int		index;
 
 	data = get_data();
-	msg = ft_strjoin("Error ", message);
-	del_data();
-	perror(msg);
-	msg = xfree(msg);
-	exit(1);
+	if (data->tex_path[side])
+		exit_error("too many texture paths in map file");
+	data->tex_path[side] = strpop(ft_strdup(data->map_file[*i] + 3), -1);
+	index = 0;
+	while (data->tex_path[side][0] == ' ')
+		data->tex_path[side] = strpop(data->tex_path[side], 0);
+	data->map_file = array_del_one(data->map_file, *i);
+	--(*i);
 }

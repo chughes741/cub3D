@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:17:56 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/19 14:18:24 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:19:31 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	mlx_pixel_img(int x, int y, int color)
 
 	data = get_data();
 	dst = data->addr + (y * data->line_size + x * (data->bpp / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
