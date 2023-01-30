@@ -6,7 +6,7 @@
 /*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/30 17:16:31 by minkim           ###   ########.fr       */
+/*   Updated: 2023/01/30 18:08:21 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,18 @@ int		check_division(int i, int j)
 			check_division_space(i, j);
 		i++;
 	}
-	if (data->map_file[i] && data->map_file[i][0] == '\n')
+	while (data->map_file[i])
 	{
-		while (data->map_file[i] && data->map_file[i][0] == '\n')
-			i++;
-		if (data->map_file[i] && ft_strchr("1 ", data->map_file[i][0]) != NULL)
-			return (1);
+		j = 0;
+		while (data->map_file[i][j])
+		{
+			if (data->map_file[i][j] == '\n' || data->map_file[i][j] == ' ')
+				;
+			else
+				exit_error("invalid map");
+			j++;
+		}
+		i++;
 	}
 	return (0);
 }
