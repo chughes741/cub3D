@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/25 15:47:39 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/30 12:36:17 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	grab_map(void)
 			--i;
 		}
 		else if (ft_strchr("1 ", data->map_file[i][0]) == NULL)
-			exit_error("error reading map ");
+			exit_error("reading map");
 	}
 	get_size();
 	if (data->height == 0 || data->width == 0)
-		exit_error("Error with map file : ");
+		exit_error("with map file");
 	data->map = xalloc(data->height + 1, sizeof(int *));
 	i = -1;
 	while (++i <= data->height)
@@ -124,8 +124,8 @@ void	check_input(int argc, char *p)
 
 	data = get_data();
 	if (argc != 2)
-		exit_error("no map path given ");
+		exit_error("no map path given");
 	if (ft_strlen(p) >= 4 && ft_strncmp(&p[ft_strlen(p) - 4], ".cub", 4))
-		exit_error("map does not have correct file suffix ");
+		exit_error("map does not have correct file suffix");
 	return ;
 }
