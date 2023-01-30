@@ -55,7 +55,8 @@ SRCS	=	src/array.c			\
 			src/render_util.c	\
 			src/str_append.c	\
 			src/textures.c		\
-			src/xalloc.c
+			src/xalloc.c		\
+			src/check_numbers.c	
 
 # Objects are all .o files
 OBJDIR	=	bin/
@@ -95,6 +96,6 @@ fclean: clean
 # Removes objects and executables and remakes
 re: fclean all
 
-test: re
+test: all
 	$(HIDE)clear
 	$(HIDE)./$(NAME) ./assets/maps/basic_map.cub

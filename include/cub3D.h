@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:51:51 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/30 12:47:19 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int		flood_fill_first_zero(int x, int y);
 int		check_closed_player(void);
 int		check_space(void);
 int		check_player(void);
+void	check_numbers(char **floor, char **ceiling);
 
 // MLX interop functions
 void	close_window(t_data **data);

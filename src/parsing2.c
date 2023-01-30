@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:29:23 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/30 12:36:31 by chughes          ###   ########.fr       */
+/*   Updated: 2023/01/30 12:47:51 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,14 @@ void	set_colors(void)
 	if (!data->floor_name || !data->ceiling_name)
 		exit_error("with map file");
 	floor = ft_split(data->floor_name, ',');
-	if (arraylen(floor) != 3)
-		exit_error("with colors");
 	ceiling = ft_split(data->ceiling_name, ',');
+	if (arraylen(floor) != 3 || arraylen(ceiling) != 3)
+		exit_error("with colors");
 	data->floor = ft_atoi(floor[0]) << 16 | ft_atoi(floor[1]) << 8 \
 	| ft_atoi(floor[2]);
 	data->ceiling = ft_atoi(ceiling[0]) << 16 | ft_atoi(ceiling[1]) << 8 \
 	| ft_atoi(ceiling[2]);
+	check_numbers(floor, ceiling);
 	floor = free_array(floor);
 	ceiling = free_array(ceiling);
 }
