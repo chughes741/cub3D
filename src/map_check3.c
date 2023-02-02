@@ -6,7 +6,7 @@
 /*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:37:20 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/30 17:07:32 by minkim           ###   ########.fr       */
+/*   Updated: 2023/02/02 13:10:01 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,6 @@ int	check_first_row(void)
 	return (0);
 }
 
-int check_left_upndown(int i, int j)
-{
-	t_data	*data;
-
-	data = get_data();
-	while (data->map_file[i + 1])
-	{
-		j = 0;
-		while (data->map_file[i][j] == ' ')
-			j++;
-		if (data->map_file[i][j] == '1' && data->map_file[i + 1][j] == '1')
-			;
-		else if (data->map_file[i][j] == '1' && data->map_file[i + 1][j] == '0')
-			exit_error("invalid map ");
-		else if (data->map_file[i][j] == '1' && data->map_file[i + 1][j] == ' ')
-		{
-			if (data->map_file[i][j + 1] != '1')
-				exit_error("invalid map ");
-		}
-		i++;
-	}
-	return (1);	
-}
-
 //
 int	check_left(void)
 {
@@ -82,8 +58,6 @@ int	check_left(void)
 				j++;
 			if (data->map_file[i][j] == '1' && check_left_upndown(i, j))
 				return (0);
-			// if (data->map_file[i][j] == '1')
-			// 	break;
 			else
 				exit_error("invalid map ");
 			j++;
@@ -91,27 +65,6 @@ int	check_left(void)
 		i++;
 	}
 	return (0);
-}
-
-int check_right_upndown(int i, int j)
-{
-	t_data	*data;
-
-	data = get_data();
-	while (data->map_file[i + 1])
-	{
-		if (data->map_file[i][j] == '1' && data->map_file[i + 1][j] == '1')
-			;
-		else if (data->map_file[i][j] == '1' && data->map_file[i + 1][j] == '0')
-			exit_error("invalid map ");
-		else if (data->map_file[i][j] == '1' && data->map_file[i + 1][j] == ' ')
-		{
-			if (data->map_file[i][j - 1] != '1')
-				exit_error("invalid map ");
-		}
-		i++;
-	}
-	return (1);	
 }
 
 //
@@ -133,9 +86,7 @@ int	check_right(void)
 				while (data->map_file[i][--j] == ' ')
 					;
 				if (data->map_file[i][j] == '1' && check_right_upndown(i, j))
-					break;
-				// if (data->map_file[i][j] == '1')
-				// 	break;
+					break ;
 				else
 					exit_error("invalid map ");
 			}

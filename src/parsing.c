@@ -6,52 +6,11 @@
 /*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/30 18:08:21 by minkim           ###   ########.fr       */
+/*   Updated: 2023/02/02 13:03:11 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int		check_division_space(int i, int j)
-{
-	t_data	*data;
-
-	data = get_data();
-	while (data->map_file[i][j] == ' ')
-		j++;
-	if (data->map_file[i][j] == '\n')
-		exit_error("multiple maps detected");
-	return (1);
-}
-
-int		check_division(int i, int j)
-{
-	t_data	*data;
-
-	data = get_data();
-	while (data->map_file[i][0] == '\n')
-		i++;
-	while (data->map_file[i] && ft_strchr("1 ", data->map_file[i][0]) != NULL)
-	{
-		if (data->map_file[i][j] == ' ')
-			check_division_space(i, j);
-		i++;
-	}
-	while (data->map_file[i])
-	{
-		j = 0;
-		while (data->map_file[i][j])
-		{
-			if (data->map_file[i][j] == '\n' || data->map_file[i][j] == ' ')
-				;
-			else
-				exit_error("invalid map");
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
 
 // Moves map tiles from map_file to map
 void	grab_map(void)
