@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
+/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:19 by chughes           #+#    #+#             */
-/*   Updated: 2023/02/02 14:44:07 by minkim           ###   ########.fr       */
+/*   Updated: 2023/02/02 15:27:12 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	free_map(void)
 	i = -1;
 	if (data->map)
 	{
-		while (data->map[++i])
+		while (++i < data->height)
 			data->map[i] = xfree(data->map[i]);
 		data->map = xfree(data->map);
 	}

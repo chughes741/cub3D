@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
+/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:37:20 by chughes           #+#    #+#             */
-/*   Updated: 2023/02/02 14:44:20 by minkim           ###   ########.fr       */
+/*   Updated: 2023/02/02 15:23:07 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_first_row(void)
 
 	data = get_data();
 	i = 0;
-	while (data->map_file[0][i] != '\n')
+	while (data->map_file[0][i])
 	{
 		if (ft_strchr("1 ", data->map_file[0][i]) == NULL)
 			exit_error("invalid map ");
