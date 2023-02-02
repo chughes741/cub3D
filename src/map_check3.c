@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:37:20 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:37:42 by chughes          ###   ########.fr       */
+/*   Updated: 2023/02/02 14:44:20 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	check_left(void)
 		{
 			while (data->map_file[i][j] == ' ')
 				j++;
-			if (data->map_file[i][j] == '1')
-				break ;
+			if (data->map_file[i][j] == '1' && check_left_upndown(i, j))
+				return (0);
 			else
 				exit_error("invalid map ");
 			j++;
@@ -85,7 +85,7 @@ int	check_right(void)
 			{
 				while (data->map_file[i][--j] == ' ')
 					;
-				if (data->map_file[i][j] == '1')
+				if (data->map_file[i][j] == '1' && check_right_upndown(i, j))
 					break ;
 				else
 					exit_error("invalid map ");

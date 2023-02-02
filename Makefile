@@ -46,6 +46,7 @@ SRCS	=	src/array.c			\
 			src/map_check.c		\
 			src/map_check2.c	\
 			src/map_check3.c	\
+			src/map_check4.c	\
 			src/moves.c			\
 			src/parsing.c		\
 			src/parsing2.c		\

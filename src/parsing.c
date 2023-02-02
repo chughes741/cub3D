@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/30 12:36:17 by chughes          ###   ########.fr       */
+/*   Updated: 2023/02/02 14:21:33 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	grab_map(void)
 	int		i;
 
 	data = get_data();
+	if (check_division(0, 0))
+		exit_error("multiple maps detected");
 	i = -1;
 	while (data->map_file[++i])
 	{
