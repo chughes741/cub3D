@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:34:13 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/23 15:34:42 by chughes          ###   ########.fr       */
+/*   Updated: 2023/02/02 14:15:05 by minkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ void	check_surround_last_row(int i, int j)
 	t_data	*data;
 
 	data = get_data();
-	if (data->map_file[i - 1][j] != '1' || data->map_file[i][j + 1] != '1')
-		exit_error("invalid map ");
+	if (data->map_file[i - 1][j] != '1')
+	{
+		if (data->map_file[i][j + 1] && data->map_file[i][j + 1] != '1')
+			exit_error("invalid map ");
+	}
 }
 
 //

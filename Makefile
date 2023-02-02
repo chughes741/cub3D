@@ -16,7 +16,7 @@ HIDE =
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra #-fsanitize=address
 INCLUDE	=	-I $(INCDIR)
 LIBS	=	-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 RM		=	rm -f
