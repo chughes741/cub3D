@@ -6,7 +6,7 @@
 /*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:38:59 by chughes           #+#    #+#             */
-/*   Updated: 2023/01/30 14:25:32 by chughes          ###   ########.fr       */
+/*   Updated: 2023/02/02 16:28:02 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@ static bool	ft_isdigit(char *str)
 	int	i;
 
 	i = 0;
-	while (str && str[i] && str[i] == ' ')
-		++i;
 	while (str[i])
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if ((str[i] < '0' || str[i] > '9') && str[i] != ' ')
 			return (true);
 		++i;
 	}
