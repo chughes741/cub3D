@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
+/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:32:36 by chughes           #+#    #+#             */
-/*   Updated: 2023/02/02 13:08:40 by minkim           ###   ########.fr       */
+/*   Updated: 2023/02/02 15:44:54 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <math.h>
-# include <OpenGL/gl3.h>
 # include <mlx.h>
+# include <math.h>
 
 # include <stdlib.h>	// malloc, free, exit
 # include <fcntl.h>		// open
 # include <unistd.h>	// close, read
 # include <stdio.h>		// printf, perror
-# include <string.h>	// strerror
 # include <stdbool.h>	// bool
 
 # include "cub3D_defines.h"
