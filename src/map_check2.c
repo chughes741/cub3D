@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
+/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:34:13 by chughes           #+#    #+#             */
-/*   Updated: 2023/02/02 14:15:05 by minkim           ###   ########.fr       */
+/*   Updated: 2023/02/02 15:38:00 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,6 @@ void	check_surround_last_row(int i, int j)
 }
 
 //
-int	check_surround_last_one(int i, int j)
-{
-	t_data	*data;
-
-	data = get_data();
-	if (data->map_file[i - 1][j] != '1' || data->map_file[i][j - 1] != '1')
-		exit_error("invalid map ");
-	return (0);
-}
-
-//
 int	check_last_row(void)
 {
 	t_data	*d;
@@ -93,7 +82,7 @@ int	check_last_row(void)
 	i = 0;
 	while (d->map_file[d->height - 1][i])
 	{
-		if (ft_strchr("1 \n", d->map_file[d->height - 1][i]) == NULL)
+		if (ft_strchr("1 ", d->map_file[d->height - 1][i]) == NULL)
 			exit_error("invalid map ");
 		if (flag == 0 && d->map_file[d->height - 1][i] == '1')
 		{
@@ -101,12 +90,6 @@ int	check_last_row(void)
 			flag = 1;
 		}
 		i++;
-	}
-	while (d->map_file[d->height - 1][--i])
-	{
-		if (d->map_file[d->height -2][i] && d->map_file[d->height -2][i] != '\n'
-			&& d->map_file[d->height - 1][i] == '1')
-			return (check_surround_last_one(d->height - 1, i));
 	}
 	return (0);
 }
