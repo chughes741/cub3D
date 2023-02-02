@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkim <minkim@student.42quebec.com>       +#+  +:+       +#+        */
+/*   By: chughes <chughes@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:29:46 by chughes           #+#    #+#             */
-/*   Updated: 2023/02/02 14:21:33 by minkim           ###   ########.fr       */
+/*   Updated: 2023/02/02 15:21:15 by chughes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	get_size(void)
 	i = 0;
 	while (i < data->height)
 	{
+		if (data->map_file[i][ft_strlen(data->map_file[i]) - 1] == '\n')
+			data->map_file[i] = strpop(data->map_file[i], -1);
 		if (ft_strlen(data->map_file[i]) > (size_t)data->width)
 			data->width = ft_strlen(data->map_file[i]) - 1;
 		++i;
